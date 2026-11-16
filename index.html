@@ -1,0 +1,1926 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>transigo case study</title>
+<meta name="description" content="transigo: a connected logistics network for shippers and transport partners. Interaction design case study by Bhargavi, with an interactive prototype.">
+<meta name="theme-color" content="#0B1D3A">
+<link rel="preload" href="assets/fonts/dm-serif-display-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/plus-jakarta-sans-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="assets/photo/truck-hero.webp" type="image/webp">
+<style>
+/* ───────── transigo case study · design tokens (V2 route-first system) ───────── */
+@font-face{font-family:"DM Serif Display";src:url(assets/fonts/dm-serif-display-latin-400-normal.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"DM Serif Display";src:url(assets/fonts/dm-serif-display-latin-400-italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Plus Jakarta Sans";src:url(assets/fonts/plus-jakarta-sans-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Plus Jakarta Sans";src:url(assets/fonts/plus-jakarta-sans-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Plus Jakarta Sans";src:url(assets/fonts/plus-jakarta-sans-latin-600-normal.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Plus Jakarta Sans";src:url(assets/fonts/plus-jakarta-sans-latin-700-normal.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Plus Jakarta Sans";src:url(assets/fonts/plus-jakarta-sans-latin-800-normal.woff2) format("woff2");font-weight:800;font-display:swap}
+
+:root{
+  --indigo:#3A0CA3;--navy:#0B1D3A;--violet:#8B5CF6;--orange:#FF7A00;--off:#F7F5F0;--white:#FFFFFF;--charcoal:#171922;
+  --text2:#697286;--border:#E2E4EB;
+  --d-base:#0D1425;--d-surface:#131D32;--d-elev:#1B2841;--d-border:#2A3854;--d-text2:#929CB7;
+  --sky:#56C7FF;--mint:#00C896;--lemon:#E9FF5B;--coral:#FF4D6D;
+  --ink:#171922;--ink2:rgba(23,25,34,.74);--ink3:rgba(23,25,34,.56);
+  --serif:"DM Serif Display",Georgia,"Times New Roman",serif;
+  --sans:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --gut:clamp(20px,5vw,72px);--max:1280px;--ease:cubic-bezier(.4,0,.2,1);--r:14px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:12px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--off);color:var(--ink);font:400 16px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg{display:block;max-width:100%}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:var(--indigo)}
+h1,h2,h3,h4,p{margin:0}
+:focus-visible{outline:3px solid var(--violet);outline-offset:3px;border-radius:6px}
+.on-dark :focus-visible,.dark :focus-visible{outline-color:var(--sky)}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{width:100%;max-width:var(--max);margin-inline:auto;padding-inline:var(--gut)}
+.eyebrow{font:700 11px/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--indigo)}
+.dark .eyebrow,.eyebrow.lt{color:var(--lemon)}
+.display{font-family:var(--serif);font-weight:400;line-height:1.02;letter-spacing:-.012em}
+.display em{font-style:italic}
+.lede{font-size:clamp(17px,1.5vw,20px);line-height:1.55;color:var(--ink2);max-width:60ch}
+.dark .lede{color:var(--d-text2)}
+.muted{color:var(--ink3)}
+section{position:relative}
+.sec{padding-block:clamp(80px,11vw,150px)}
+.sec-head{display:grid;gap:18px;margin-bottom:clamp(36px,5vw,64px);max-width:980px}
+.sec-head h2{font-size:clamp(40px,6.2vw,88px)}
+.sec-no{display:flex;align-items:center;gap:12px}
+.sec-no::after{content:"";height:1px;width:56px;background:currentColor;opacity:.4}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:14px;border:1.5px solid transparent;font:700 15px/1 var(--sans);text-decoration:none;transition:transform .2s var(--ease),background .2s var(--ease),box-shadow .2s var(--ease),border-color .2s var(--ease)}
+.btn svg{width:18px;height:18px;transition:transform .25s var(--ease)}
+.btn:hover svg{transform:translateX(3px)}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--indigo);color:#fff}
+.btn-primary:hover{background:#4a18bd}
+.btn-action{background:var(--orange);color:var(--charcoal)}
+.btn-action:hover{background:#ff8a1f}
+.btn-secondary{background:#fff;color:var(--indigo);border-color:var(--border)}
+.btn-secondary:hover{border-color:var(--indigo)}
+.btn-ghost{background:transparent;color:var(--indigo);min-height:44px;padding:0 14px}
+.btn-danger{background:#fff;color:#b3173a;border-color:var(--coral)}
+.btn[disabled],.btn.is-disabled{background:var(--border);color:var(--text2);border-color:transparent;cursor:not-allowed}
+.btn.is-hover{filter:brightness(1.08)}
+.btn.is-focus{outline:3px solid var(--violet);outline-offset:3px}
+.chip{display:inline-flex;align-items:center;gap:7px;min-height:28px;padding:0 12px;border-radius:999px;font:600 12px/1 var(--sans);background:#EEF1F6;color:var(--charcoal);white-space:nowrap}
+.chip::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c,var(--text2))}
+.chip.transit{background:#E6F6FF;--c:var(--sky)}.chip.delivered{background:#DDF7EE;--c:var(--mint)}.chip.attn{background:#F6F8C9;--c:#9a9a00}.chip.delay{background:#FFE3E8;--c:var(--coral)}.chip.pending{background:#ECEEF3;--c:var(--text2)}.chip.proc{background:#EADFFD;--c:var(--violet)}
+.dark .chip,.chip.d{background:rgba(255,255,255,.08);color:#fff}
+.dark .chip.delivered,.chip.d.delivered{background:#0f3d37}.dark .chip.attn,.chip.d.attn{background:#3a4012;--c:var(--lemon)}.dark .chip.delay,.chip.d.delay{background:#4a1c2b}.dark .chip.transit,.chip.d.transit{background:#13324a}.dark .chip.proc,.chip.d.proc{background:#2d1f5a}
+.rule{height:1px;background:var(--border)}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.draw path.dr{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.6s var(--ease)}
+.draw.in path.dr{stroke-dashoffset:0}
+
+/* ───────── progress + floating navigation ───────── */
+.progress{position:fixed;inset:0 0 auto 0;height:3px;z-index:90;background:transparent;pointer-events:none}
+.progress i{display:block;height:100%;width:100%;background:var(--violet);transform-origin:0 50%;transform:scaleX(0)}
+.nav-fab{position:fixed;top:18px;right:18px;z-index:95;width:52px;height:52px;border-radius:50%;border:1.5px solid rgba(255,255,255,.28);background:rgba(11,29,58,.92);display:grid;place-items:center;transition:transform .25s var(--ease),background .2s}
+.nav-fab:hover{transform:scale(1.06);background:var(--navy)}
+.nav-fab .bars{position:relative;width:20px;height:14px}
+.nav-fab .bars i{position:absolute;left:0;right:0;height:2px;border-radius:2px;background:#fff;transition:transform .3s var(--ease),opacity .2s}
+.nav-fab .bars i:nth-child(1){top:0}.nav-fab .bars i:nth-child(2){top:6px}.nav-fab .bars i:nth-child(3){top:12px}
+.nav-fab[aria-expanded=true] .bars i:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.nav-fab[aria-expanded=true] .bars i:nth-child(2){opacity:0}
+.nav-fab[aria-expanded=true] .bars i:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.nav-fab .ring{position:absolute;inset:-5px;width:62px;height:62px;transform:rotate(-90deg);pointer-events:none}
+.nav-fab .ring circle{fill:none;stroke-width:2.5}
+.nav-fab .ring .bg{stroke:rgba(255,255,255,.0)}
+.nav-fab .ring .fg{stroke:var(--violet);stroke-linecap:round;stroke-dasharray:176;stroke-dashoffset:176}
+.scrim{position:fixed;inset:0;z-index:92;background:rgba(7,12,24,.55);opacity:0;visibility:hidden;transition:opacity .3s var(--ease),visibility .3s}
+.scrim.open{opacity:1;visibility:visible}
+.drawer{position:fixed;top:0;right:0;bottom:0;z-index:94;width:min(400px,100vw);background:var(--d-base);color:#fff;padding:92px 28px 28px;transform:translateX(104%);visibility:hidden;transition:transform .42s var(--ease),visibility .42s;display:flex;flex-direction:column;border-left:1px solid var(--d-border);overflow:auto}
+.drawer.open{transform:none;visibility:visible}
+.drawer .brand{position:absolute;top:26px;left:28px}
+.drawer ol{list-style:none;margin:0;padding:0;display:grid;gap:2px;counter-reset:n}
+.drawer a{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:6px;min-height:56px;padding:6px 10px;border-radius:12px;color:#fff;text-decoration:none;font:600 17px/1.2 var(--sans);position:relative;transition:background .2s}
+.drawer a small{font:700 11px/1 var(--sans);letter-spacing:.1em;color:var(--d-text2)}
+.drawer a:hover{background:var(--d-surface)}
+.drawer a .dot{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--d-border);transition:all .25s var(--ease)}
+.drawer a[aria-current=true]{background:var(--d-elev)}
+.drawer a[aria-current=true] .dot{background:var(--violet);border-color:var(--violet);box-shadow:0 0 0 5px rgba(139,92,246,.25)}
+.drawer a[aria-current=true] small{color:var(--lemon)}
+.drawer .foot{margin-top:auto;padding-top:28px;font-size:12px;color:var(--d-text2);line-height:1.5}
+.brand{display:inline-flex;align-items:center;gap:9px;text-decoration:none;color:inherit;font-family:var(--serif);font-size:26px;line-height:1}
+.brand svg{width:26px;height:26px}
+.skip{position:absolute;left:12px;top:-60px;z-index:200;background:#fff;color:var(--indigo);padding:12px 16px;border-radius:10px;font-weight:700;text-decoration:none;transition:top .2s}
+.skip:focus{top:12px}
+
+/* ───────── hero ───────── */
+.hero{--T:22s;position:relative;background:var(--navy);color:#fff;min-height:max(100svh,720px);overflow:hidden;isolation:isolate}
+.hero-top{position:absolute;z-index:6;inset:22px var(--gut) auto var(--gut);display:flex;align-items:center;justify-content:space-between;padding-right:70px}
+.hero-top .brand{color:#fff}
+.hero-top .by{font:600 12px/1.3 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+.hero-photo{position:absolute;right:0;bottom:0;width:min(100vw,200svh);aspect-ratio:1774/887;z-index:1;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 22%);mask-image:linear-gradient(to bottom,transparent 0,#000 22%)}
+.hero-view{position:absolute;inset:0;overflow:hidden}
+.cam{position:absolute;inset:0;transform-origin:78% 62%;animation:cam var(--T) cubic-bezier(.45,0,.35,1) infinite}
+.cam picture,.cam img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+@keyframes cam{0%{transform:scale(1) translate(0,0)}22%{transform:scale(1.018) translate(-.3%,-.1%)}60%{transform:scale(1.045) translate(-.9%,-.5%)}84%{transform:scale(1.06) translate(-1.2%,-.7%)}96%{transform:scale(1.02) translate(-.3%,-.1%)}100%{transform:scale(1) translate(0,0)}}
+.tint{position:absolute;inset:0;background:linear-gradient(180deg,#0a1238,#1a1450 60%,#2a1858);mix-blend-mode:multiply;opacity:0;animation:tint var(--T) ease-in-out infinite}
+@keyframes tint{0%{opacity:.55}14%{opacity:0}84%{opacity:0}100%{opacity:.55}}
+.glow-sun{position:absolute;inset:0;background:radial-gradient(circle at 90.8% 47.3%,rgba(255,138,40,.55),transparent 16%);mix-blend-mode:screen;animation:sun var(--T) ease-in-out infinite}
+@keyframes sun{0%,100%{opacity:.35}45%{opacity:.7}75%{opacity:.5}}
+.glow-head{position:absolute;inset:0;background:radial-gradient(circle at 72.4% 72.5%,rgba(190,215,255,.55),transparent 4.5%),radial-gradient(circle at 81.8% 72.8%,rgba(190,215,255,.45),transparent 3.6%);mix-blend-mode:screen;animation:head 5.5s ease-in-out infinite}
+@keyframes head{0%,100%{opacity:.55}50%{opacity:1}}
+.streaks line{stroke:#fff;stroke-opacity:.0;stroke-width:2;stroke-linecap:round;stroke-dasharray:46 260;animation:streak 1.5s linear infinite}
+.streaks line:nth-child(2){animation-delay:-.5s}.streaks line:nth-child(3){animation-delay:-1s}
+@keyframes streak{0%{stroke-dashoffset:306;stroke-opacity:.0}15%{stroke-opacity:.26}85%{stroke-opacity:.2}100%{stroke-dashoffset:0;stroke-opacity:0}}
+.hero-shade{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,rgba(11,29,58,.92) 0,rgba(11,29,58,.78) 26%,rgba(11,29,58,.2) 54%,transparent 68%);-webkit-mask-image:linear-gradient(to bottom,#000 55%,transparent 82%);mask-image:linear-gradient(to bottom,#000 55%,transparent 82%)}
+.hero-copy{position:relative;z-index:5;padding:clamp(104px,15svh,150px) var(--gut) 0;max-width:calc(var(--max) + 2*var(--gut));margin-inline:auto}
+.hero-copy .eyebrow{display:block;margin-bottom:22px;color:var(--lemon)}
+.hero h1{font-size:clamp(46px,6.6vw,112px);max-width:11.2em;text-wrap:balance}
+.hero h1 em{color:#fff;background:linear-gradient(transparent 82%,rgba(139,92,246,.55) 82%);padding-inline:.04em}
+.hero .hook{margin-top:clamp(20px,2.6vw,34px);font:italic 400 clamp(22px,2.4vw,34px)/1.2 var(--serif);max-width:20em;color:#fff}
+.hero .sub{margin-top:16px;max-width:34em;font-size:clamp(15px,1.15vw,17px);color:rgba(255,255,255,.82)}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.hero .btn-ghost{color:#fff;border:1.5px solid rgba(255,255,255,.3);min-height:52px;padding:0 22px}
+.hero .btn-ghost:hover{border-color:#fff}
+.scroll-cue{position:absolute;z-index:6;left:var(--gut);bottom:26px;display:flex;align-items:center;gap:12px;font:700 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.8);text-decoration:none}
+.scroll-cue i{display:block;width:1.5px;height:42px;background:rgba(255,255,255,.28);position:relative;overflow:hidden}
+.scroll-cue i::after{content:"";position:absolute;left:0;top:-14px;width:100%;height:14px;background:var(--violet);animation:cue 2.2s var(--ease) infinite}
+@keyframes cue{0%{top:-14px}100%{top:100%}}
+.hero-fade{position:absolute;z-index:3;left:0;right:0;bottom:0;height:110px;background:linear-gradient(to bottom,transparent,rgba(247,245,240,0));pointer-events:none}
+.hero-edge{height:34px;background:var(--navy);position:relative}
+.hero-edge::after{content:"";position:absolute;left:0;right:0;top:100%;height:70px;background:linear-gradient(var(--navy),transparent);pointer-events:none}
+
+/* hero beats (22s loop) */
+.beat{opacity:0}
+.cargo-wrap{opacity:0;animation:cargoA var(--T) linear infinite}
+@keyframes cargoA{0%,15%{opacity:0}16%,31%{opacity:1}32%,100%{opacity:0}}
+.wipe{animation:wipe var(--T) cubic-bezier(.6,0,.3,1) infinite;transform:translateX(-420px)}
+@keyframes wipe{0%,14.5%{transform:translateX(-430px)}19%,28.5%{transform:translateX(0)}33%,100%{transform:translateX(-430px)}}
+.cutline{animation:cutl var(--T) linear infinite;opacity:0}
+@keyframes cutl{0%,15%{opacity:0}18%,30%{opacity:.9}33%,100%{opacity:0}}
+.cargo-tag{opacity:0;animation:tagA var(--T) linear infinite}
+@keyframes tagA{0%,19%{opacity:0;transform:translateY(6px)}21%,28%{opacity:1;transform:none}30%,100%{opacity:0}}
+.route-a{stroke-dasharray:.56 2;stroke-dashoffset:.56;animation:rA var(--T) cubic-bezier(.5,0,.3,1) infinite}
+@keyframes rA{0%,36%{stroke-dashoffset:.56;opacity:1}45%,84%{stroke-dashoffset:0;opacity:1}90%{stroke-dashoffset:0;opacity:0}100%{stroke-dashoffset:.56;opacity:0}}
+.route-glow{animation:rGl var(--T) ease-in-out infinite;opacity:0}
+@keyframes rGl{0%,66%{opacity:0}72%,82%{opacity:.9}88%,100%{opacity:0}}
+.route-b{animation:rBo var(--T) linear infinite;opacity:0}
+@keyframes rBo{0%,43%{opacity:0}46%,84%{opacity:1}90%,100%{opacity:0}}
+.pin{opacity:0;transform-box:fill-box;transform-origin:50% 100%}
+.pin-o{animation:pinO var(--T) cubic-bezier(.3,1.4,.5,1) infinite}
+.pin-d{animation:pinD var(--T) cubic-bezier(.3,1.4,.5,1) infinite}
+@keyframes pinO{0%,35%{opacity:0;transform:translateY(-10px) scale(.7)}39%,84%{opacity:1;transform:none}90%,100%{opacity:0;transform:none}}
+@keyframes pinD{0%,50%{opacity:0;transform:translateY(-10px) scale(.7)}54%,84%{opacity:1;transform:none}90%,100%{opacity:0;transform:none}}
+.sig{opacity:0;transform-box:fill-box;transform-origin:center}
+.sig-d{animation:sigD var(--T) linear infinite}
+.sig-v{animation:sigV var(--T) linear infinite}
+@keyframes sigD{0%,40%{opacity:0;transform:none}43%,61%{opacity:1;transform:none}72%{opacity:1;transform:translate(var(--dx),var(--dy))}74%,100%{opacity:0;transform:translate(var(--dx),var(--dy))}}
+@keyframes sigV{0%,42%{opacity:0;transform:none}45%,61%{opacity:1;transform:none}72%{opacity:1;transform:translate(var(--dx),var(--dy))}74%,100%{opacity:0;transform:translate(var(--dx),var(--dy))}}
+.sig .pulse{transform-box:fill-box;transform-origin:center;animation:pulse 1.6s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.6);opacity:.9}100%{transform:scale(2.4);opacity:0}}
+.sig-tag{opacity:0;animation:sigT var(--T) linear infinite}
+@keyframes sigT{0%,43%{opacity:0}46%,60%{opacity:1}64%,100%{opacity:0}}
+.match{opacity:0;transform-box:fill-box;transform-origin:center;animation:match var(--T) cubic-bezier(.3,1.3,.5,1) infinite}
+@keyframes match{0%,70%{opacity:0;transform:scale(.6)}74%,83%{opacity:1;transform:scale(1)}88%,100%{opacity:0;transform:scale(1)}}
+.match-chip{opacity:0;animation:mChip var(--T) linear infinite}
+@keyframes mChip{0%,73%{opacity:0;transform:translateY(8px)}76%,83%{opacity:1;transform:none}87%,100%{opacity:0}}
+.flow{stroke-dasharray:2 14;animation:flow 1.1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-16}}
+
+/* reduced motion / static fallback */
+@media (prefers-reduced-motion:reduce){
+  .hero *,.hero *::before,.hero *::after{animation:none!important}
+  .cam{transform:none}
+  .cargo-wrap,.cargo-tag,.sig,.sig-tag,.cutline,.route-glow,.tint{opacity:0}
+  .route-a{stroke-dashoffset:0}.route-b{opacity:1}
+  .pin,.match,.match-chip{opacity:1}
+  .scroll-cue i::after{display:none}
+  .reveal{opacity:1;transform:none}.draw path.dr{stroke-dashoffset:0}
+}
+
+/* ───────── overview ───────── */
+.overview{background:var(--off)}
+.ov-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(32px,5vw,80px);align-items:start}
+.ov-copy .display{font-size:clamp(46px,6.8vw,104px)}
+.ov-copy .display em{color:var(--indigo)}
+.ov-copy .lede{margin-top:26px}
+.meta{margin:36px 0 0;display:grid;grid-template-columns:repeat(2,1fr);gap:0 28px;border-top:1.5px solid var(--charcoal)}
+.meta div{padding:14px 0;border-bottom:1px solid var(--border)}
+.meta dt{font:700 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:6px}
+.meta dd{margin:0;font-weight:600;font-size:15px;line-height:1.4}
+.meta .wide{grid-column:1/-1}
+.two-sides{position:relative;height:clamp(440px,44vw,620px)}
+.two-sides .ph{position:absolute;width:clamp(170px,15.5vw,230px);border-radius:26px;overflow:hidden;box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 0 0 1.5px var(--border);background:#fff}
+.two-sides .ph img{width:100%;height:auto}
+.two-sides .a{left:2%;top:4%;transform:rotate(-3deg)}
+.two-sides .b{right:2%;top:12%;transform:rotate(3deg);box-shadow:0 0 0 1.5px var(--d-border)}
+.two-sides svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.two-sides .tag{position:absolute;z-index:4;font:700 11px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;padding:8px 12px;border-radius:999px;background:var(--navy);color:#fff}
+.two-sides .tag.l{left:4%;top:-6px;background:#fff;color:var(--indigo);box-shadow:0 0 0 1.5px var(--border)}
+.two-sides .tag.r{right:2%;bottom:-6px}
+.acc{margin-top:clamp(48px,6vw,88px);border-top:1.5px solid var(--charcoal)}
+.acc-item{border-bottom:1px solid var(--border)}
+.acc-btn{width:100%;display:grid;grid-template-columns:64px 1fr 44px;align-items:center;gap:16px;text-align:left;background:none;border:0;padding:26px 0;min-height:44px}
+.acc-btn .n{font:700 12px/1 var(--sans);letter-spacing:.12em;color:var(--indigo)}
+.acc-btn .t{font:400 clamp(26px,3.4vw,44px)/1.1 var(--serif)}
+.acc-btn .pm{position:relative;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--charcoal);transition:background .25s var(--ease),transform .35s var(--ease)}
+.acc-btn .pm::before,.acc-btn .pm::after{content:"";position:absolute;left:50%;top:50%;width:16px;height:1.8px;background:currentColor;transform:translate(-50%,-50%);transition:transform .35s var(--ease)}
+.acc-btn .pm::after{transform:translate(-50%,-50%) rotate(90deg)}
+.acc-btn:hover .pm{background:var(--white)}
+.acc-btn[aria-expanded=true] .pm{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+.acc-btn[aria-expanded=true] .pm::after{transform:translate(-50%,-50%) rotate(0)}
+.acc-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--ease)}
+.acc-panel>div{overflow:hidden;min-height:0}
+.acc-item.open .acc-panel{grid-template-rows:1fr}
+.acc-body{display:grid;grid-template-columns:64px 1.1fr 1fr;gap:16px 32px;padding:4px 0 40px}
+.acc-body .col2{grid-column:2}.acc-body .col3{grid-column:3}
+.acc-body p+p{margin-top:12px}
+.acc-body p{color:var(--ink2)}
+.acc-body h4{font:700 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;color:var(--ink3)}
+.quote{font:italic 400 22px/1.25 var(--serif);padding-left:16px;border-left:3px solid var(--violet);margin:14px 0}
+.quote small{display:block;font:600 12px/1.3 var(--sans);color:var(--ink3);margin-top:6px;font-style:normal}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.tag-s{font:600 12px/1 var(--sans);padding:8px 12px;border-radius:999px;background:#fff;border:1px solid var(--border)}
+.flag{display:inline-flex;align-items:center;gap:8px;font:700 11px/1.3 var(--sans);letter-spacing:.06em;text-transform:uppercase;padding:8px 12px;border-radius:10px;background:#EADFFD;color:var(--indigo);margin-bottom:14px}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:6px}
+.stat{padding:16px;border-radius:var(--r);background:#fff;border:1px solid var(--border)}
+.stat b{display:block;font:400 30px/1.05 var(--serif);color:var(--indigo)}
+.stat span{display:block;margin-top:6px;font-size:12px;line-height:1.4;color:var(--ink3)}
+.viz{border-radius:18px;background:#fff;border:1px solid var(--border);padding:12px}
+.viz svg{width:100%;height:auto}
+
+/* ───────── coordination gap ───────── */
+.gap{background:#fff}
+.gap .sec-head h2 em{color:var(--indigo)}
+.gap-layout{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,80px);align-items:start}
+.gap-sticky{position:sticky;top:5vh;height:90svh;max-height:720px;display:flex;align-items:center}
+.gap-fig{width:100%;border-radius:22px;background:var(--off);border:1px solid var(--border);padding:clamp(10px,2vw,22px);position:relative}
+.gap-fig svg{width:100%;height:auto;overflow:visible}
+.gap-fig .stepno{position:absolute;left:22px;top:18px;font:700 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--indigo)}
+.gap-steps{display:grid;gap:0}
+.gap-step{min-height:78svh;display:flex;flex-direction:column;justify-content:center;padding-block:40px;opacity:.38;transition:opacity .5s var(--ease)}
+.gap-step.active{opacity:1}
+.gap-step .k{font:700 12px/1 var(--sans);letter-spacing:.14em;color:var(--indigo);margin-bottom:14px}
+.gap-step h3{font:400 clamp(30px,3.7vw,52px)/1.08 var(--serif);margin-bottom:18px}
+.gap-step p{color:var(--ink2);max-width:46ch}
+.gap-step .ev{margin-top:20px;display:grid;gap:10px}
+.gap-step .ev .quote{font-size:19px;margin:0}
+.fig-g{opacity:0;transition:opacity .6s var(--ease);pointer-events:none}
+.gap-fig[data-step="1"] .g1,.gap-fig[data-step="2"] .g2,.gap-fig[data-step="3"] .g3,.gap-fig[data-step="4"] .g4{opacity:1;pointer-events:auto}
+.gap-fig svg text{font-family:var(--sans)}
+.tangle{stroke:var(--text2);stroke-width:1.5;fill:none;stroke-dasharray:4 6;animation:flow 2.4s linear infinite}
+.node{cursor:default}
+.node rect{fill:#fff;stroke:var(--border);stroke-width:1.5}
+.node text{font-size:13px;font-weight:700;fill:var(--charcoal)}
+.node:hover rect{stroke:var(--indigo)}
+.ping{fill:var(--coral);transform-box:fill-box;transform-origin:center;animation:pulse 2s ease-out infinite}
+.reveal-btn{position:absolute;right:18px;bottom:16px}
+.research-strip{margin-top:clamp(56px,7vw,100px);display:grid;grid-template-columns:repeat(6,1fr);gap:0;border-top:1.5px solid var(--charcoal)}
+.research-strip div{padding:20px 18px 0 0}
+.research-strip b{display:block;font:400 clamp(28px,3vw,40px)/1 var(--serif);color:var(--indigo)}
+.research-strip span{display:block;margin-top:8px;font-size:13px;line-height:1.45;color:var(--ink2)}
+.personas{margin-top:clamp(40px,5vw,72px);display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(16px,2vw,28px)}
+.persona{border-radius:20px;background:var(--off);border:1px solid var(--border);padding:28px;display:grid;gap:14px}
+.persona .who{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.persona h4{font:400 30px/1.1 var(--serif)}
+.persona .meta-l{font:600 12px/1.4 var(--sans);color:var(--ink3);letter-spacing:.04em}
+.persona ul{margin:0;padding-left:18px;color:var(--ink2);font-size:14px}
+.persona ul li{margin-bottom:5px}
+.persona .need{font:700 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--indigo);margin-top:4px}
+.photo-band{margin:clamp(48px,6vw,90px) 0 0;border-radius:24px;overflow:hidden;position:relative;aspect-ratio:21/8;background:var(--navy)}
+.photo-band img{width:100%;height:100%;object-fit:cover;filter:saturate(.85) contrast(1.02)}
+.photo-band::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(58,12,163,.55),rgba(11,29,58,.15) 60%,rgba(11,29,58,.5));mix-blend-mode:multiply}
+.photo-band figcaption{position:absolute;z-index:2;left:clamp(20px,3vw,40px);bottom:clamp(16px,2.4vw,32px);color:#fff;max-width:34em;font:italic 400 clamp(20px,2.4vw,32px)/1.15 var(--serif)}
+.photo-band figcaption small{display:block;font:600 11px/1.3 var(--sans);letter-spacing:.12em;text-transform:uppercase;margin-top:10px;color:rgba(255,255,255,.8);font-style:normal}
+
+/* ───────── service transformation ───────── */
+.service{background:var(--off)}
+.service .sec-head h2 em{color:var(--indigo)}
+.ctl{display:flex;flex-wrap:wrap;gap:16px 28px;align-items:center;margin-bottom:28px;position:sticky;top:0;z-index:20;padding:14px 0;background:rgba(247,245,240,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--border)}
+.seg{display:inline-flex;padding:4px;background:#fff;border:1.5px solid var(--border);border-radius:999px;position:relative}
+.seg button{position:relative;z-index:1;border:0;background:none;min-height:44px;padding:0 22px;border-radius:999px;font:700 14px/1 var(--sans);color:var(--ink2);transition:color .25s}
+.seg button[aria-selected=true],.seg button[aria-pressed=true]{color:#fff}
+.seg .thumb{position:absolute;z-index:0;top:4px;bottom:4px;left:4px;border-radius:999px;background:var(--indigo);transition:transform .4s var(--ease),width .4s var(--ease)}
+.seg.after .thumb{background:var(--indigo)}
+.ctl .lbl{font:700 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-right:-12px}
+.svc-who{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.svc-who button{min-height:40px;padding:0 16px;border-radius:999px;border:1.5px solid var(--border);background:#fff;font:600 13px/1 var(--sans);transition:all .2s}
+.svc-who button[aria-pressed=true]{border-color:var(--indigo);background:#EADFFD;color:var(--indigo)}
+.cjm{border-radius:24px;background:#fff;border:1px solid var(--border);overflow:hidden;transition:background .5s var(--ease)}
+.cjm-head{display:grid;grid-template-columns:1fr 1.4fr;gap:20px 40px;padding:clamp(20px,3vw,34px);border-bottom:1px solid var(--border);align-items:end}
+.cjm-head h3{font:400 clamp(28px,3.2vw,44px)/1.08 var(--serif)}
+.cjm-head p{color:var(--ink2);font-size:15px}
+.cjm-grid{display:grid;grid-template-columns:132px repeat(5,minmax(0,1fr));overflow-x:auto}
+.cjm-grid>*{padding:16px 14px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);font-size:13.5px;line-height:1.45;min-width:0}
+.cjm-grid>*:nth-child(6n){border-right:0}
+.cjm-grid .rowh{font:700 11px/1.3 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);background:var(--off)}
+.cjm-grid .st{font:700 13px/1.2 var(--sans);background:var(--off);color:var(--charcoal);display:flex;align-items:center;gap:8px}
+.cjm-grid .st i{font-style:normal;width:22px;height:22px;border-radius:50%;background:var(--indigo);color:#fff;display:grid;place-items:center;font-size:11px}
+.cjm-grid .feel{font:italic 400 16px/1.25 var(--serif)}
+.cjm-grid .feel em{display:block;font-style:normal;font-size:22px;margin-top:8px}
+.cjm-grid .pain{background:#FFF3F5;color:#5a1020;position:relative;transition:opacity .4s,transform .5s var(--ease)}
+.cjm-grid .opp{background:#EEE9FD;color:#2b0b78;transition:opacity .4s,transform .5s var(--ease)}
+.cjm[data-state=before] .opp,.cjm[data-state=after] .pain{display:none}
+.cjm-grid .rowh.pain-h{background:#FFE3E8;color:#7a1229}
+.cjm-grid .rowh.opp-h{background:#DCD2FB;color:var(--indigo)}
+.cjm[data-state=before] .opp-h,.cjm[data-state=after] .pain-h{display:none}
+.cjm[data-state=before] .feel{opacity:.55}
+.cjm .swap{animation:swap .55s var(--ease)}
+@keyframes swap{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.bp{margin-top:clamp(40px,5vw,72px)}
+.bp h3{font:400 clamp(30px,3.6vw,50px)/1.08 var(--serif);margin-bottom:12px}
+.bp-areas{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 16px}
+.bp-areas button{min-height:44px;padding:0 18px;border-radius:12px;border:1.5px solid var(--border);background:#fff;font:700 13px/1.2 var(--sans);transition:all .2s;text-align:left}
+.bp-areas button small{display:block;font-weight:600;font-size:11px;color:var(--ink3);margin-top:3px}
+.bp-areas button[aria-selected=true]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.bp-areas button[aria-selected=true] small{color:var(--d-text2)}
+.layers{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:18px}
+.layers .lbl{font:700 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-right:6px}
+.layers button{min-height:36px;padding:0 14px;border-radius:999px;border:1.5px solid var(--border);background:#fff;font:600 12.5px/1 var(--sans);display:inline-flex;align-items:center;gap:8px}
+.layers button::before{content:"";width:9px;height:9px;border-radius:3px;border:1.5px solid var(--text2)}
+.layers button[aria-pressed=true]{background:#EADFFD;border-color:var(--indigo);color:var(--indigo)}
+.layers button[aria-pressed=true]::before{background:var(--indigo);border-color:var(--indigo)}
+.bp-board{border-radius:24px;background:#fff;border:1px solid var(--border);padding:clamp(14px,2vw,26px);overflow:hidden}
+.bp-phases{display:grid;gap:12px;grid-template-columns:repeat(var(--cols,5),minmax(190px,1fr));overflow-x:auto;padding-bottom:6px;scroll-snap-type:x proximity}
+.ph-col{scroll-snap-align:start;display:grid;align-content:start;gap:10px}
+.ph-head{min-height:64px;display:flex;flex-direction:column;justify-content:center;position:relative;padding:14px 16px 14px 18px;border-radius:12px 0 0 12px;background:var(--navy);color:#fff;font:700 14px/1.2 var(--sans);clip-path:polygon(0 0,calc(100% - 14px) 0,100% 50%,calc(100% - 14px) 100%,0 100%)}
+.after .ph-head{background:var(--indigo)}
+.ph-head small{display:block;margin-top:4px;font:500 11.5px/1.2 var(--sans);color:rgba(255,255,255,.75)}
+.lay{padding:12px 14px;border-radius:12px;font-size:13px;line-height:1.45;border:1px solid var(--border);background:var(--off);animation:swap .5s var(--ease) both}
+.lay b{display:block;font:700 10px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:7px}
+.lay[data-l=customer]{background:#EAF3FF;border-color:#cfe0fb}
+.lay[data-l=onstage]{background:#E3EEFF;border-color:#c3d8fb}
+.lay[data-l=backstage]{background:#E4EAF6;border-color:#cbd5ea}
+.lay[data-l=support]{background:var(--navy);border-color:var(--navy);color:#fff}
+.lay[data-l=support] b{color:var(--d-text2)}
+.lay[data-l=physical]{background:#FBF6E4;border-color:#efe3b4}
+.line-label{grid-column:1/-1;font:700 10px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);border-top:1.5px dashed var(--border);padding-top:8px}
+.bp-note{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.break-box,.change-box{padding:18px 20px;border-radius:16px;font-size:14px;line-height:1.5}
+.break-box{background:#FFF3F5;color:#5a1020}
+.change-box{background:#EEE9FD;color:#2b0b78}
+.break-box h4,.change-box h4{font:700 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.touch{margin-top:18px;display:grid;gap:8px}
+.touch-row{display:grid;grid-template-columns:1fr 28px 1.2fr 210px;gap:12px;align-items:center;padding:12px 16px;border-radius:14px;background:#fff;border:1px solid var(--border);font-size:13.5px}
+.touch-row .arr{color:var(--indigo)}
+.touch-row .was{color:var(--ink2);text-decoration:line-through;text-decoration-color:rgba(255,77,109,.7)}
+.touch-row button{border:0;background:none;color:var(--indigo);font:700 12px/1 var(--sans);text-decoration:underline;min-height:36px;padding:0 4px}
+.caveat{font-size:12.5px;color:var(--ink3);margin-top:12px;max-width:80ch}
+
+/* ───────── connected service ───────── */
+.connected{background:#fff}
+.connected .sec-head h2 em{color:var(--indigo)}
+.eco{border-radius:28px;background:var(--navy);color:#fff;padding:clamp(18px,3vw,40px);overflow:hidden;position:relative}
+.eco-lanes{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:0;position:relative}
+.eco-lane-l{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;font:700 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;padding:12px 0}
+.eco-lane-l span{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px}
+.eco-lane-l .s{background:var(--off);color:var(--indigo)}
+.eco-lane-l .p{background:var(--d-elev);color:#fff;border:1px solid var(--d-border)}
+.eco-svg{width:100%;height:auto;display:block}
+.eco-svg text{font-family:var(--sans)}
+.st-node{cursor:pointer;outline:none}
+.st-node .c{fill:var(--d-base);stroke:var(--violet);stroke-width:2.5;transition:all .3s var(--ease)}
+.st-node .n{fill:#fff;font-size:15px;font-weight:800;text-anchor:middle;dominant-baseline:central}
+.st-node .t{fill:#fff;font-size:13px;font-weight:700;text-anchor:middle}
+.st-node:hover .c,.st-node:focus-visible .c{fill:var(--indigo)}
+.st-node[aria-current=true] .c{fill:var(--orange);stroke:#fff}
+.st-node[aria-current=true] .n{fill:var(--charcoal)}
+.st-node:focus-visible .c{stroke:var(--sky);stroke-width:4}
+.eco-route{stroke:var(--violet);stroke-width:3;fill:none}
+.eco-route.dot{stroke:rgba(255,255,255,.35);stroke-dasharray:2 9;stroke-linecap:round}
+.eco-flow{stroke:var(--lemon);stroke-width:2;stroke-dasharray:3 10;stroke-linecap:round;fill:none;animation:flow 1.2s linear infinite}
+.eco-detail{margin-top:22px;display:grid;grid-template-columns:1fr 1.1fr 1fr;gap:clamp(16px,2vw,28px);align-items:start}
+.eco-card{border-radius:20px;padding:20px;display:grid;gap:12px;align-content:start;min-height:100%}
+.eco-card.s{background:var(--off);color:var(--ink)}
+.eco-card.p{background:var(--d-surface);border:1px solid var(--d-border)}
+.eco-card.m{background:transparent;border:1.5px dashed rgba(255,255,255,.3)}
+.eco-card .who{font:700 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase}
+.eco-card.s .who{color:var(--indigo)}.eco-card.p .who{color:var(--lemon)}.eco-card.m .who{color:var(--sky)}
+.eco-card h4{font:400 24px/1.15 var(--serif)}
+.eco-card p{font-size:14px;line-height:1.5}
+.eco-card.s p{color:var(--ink2)}.eco-card.p p,.eco-card.m p{color:var(--d-text2)}
+.eco-card .shots{display:flex;gap:10px}
+.eco-card .shots button{border:0;padding:0;background:none;border-radius:14px;overflow:hidden;flex:0 0 auto;width:calc(50% - 5px);max-width:150px;box-shadow:0 0 0 1.5px rgba(23,25,34,.12);transition:transform .25s var(--ease)}
+.eco-card.p .shots button{box-shadow:0 0 0 1.5px var(--d-border)}
+.eco-card .shots button:hover{transform:translateY(-4px)}
+.eco-card .shots img{width:100%;height:auto}
+.eco-card.m ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.eco-card.m li{display:flex;gap:10px;font-size:13.5px;color:#fff}
+.eco-card.m li::before{content:"";flex:0 0 7px;height:7px;border-radius:50%;background:var(--lemon);margin-top:8px}
+
+/* ───────── design manual ───────── */
+.manual{background:var(--off)}
+.manual .sec-head h2 em{color:var(--indigo)}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;border-bottom:1.5px solid var(--charcoal);margin-bottom:34px;position:sticky;top:0;z-index:15;background:rgba(247,245,240,.95);backdrop-filter:blur(6px);padding-top:10px}
+.tabs button{border:0;background:none;min-height:48px;padding:0 18px;font:700 14px/1 var(--sans);color:var(--ink2);border-bottom:4px solid transparent;margin-bottom:-1.5px}
+.tabs button[aria-selected=true]{color:var(--indigo);border-bottom-color:var(--indigo)}
+.tabs button:hover{color:var(--charcoal)}
+.tp[hidden]{display:none}
+.tp{animation:swap .5s var(--ease)}
+.brand-stage{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.bs{border-radius:22px;min-height:230px;display:grid;place-items:center;padding:30px;position:relative}
+.bs .brand{font-size:clamp(34px,4vw,56px)}
+.bs .brand svg{width:clamp(30px,3.6vw,50px);height:auto}
+.bs.l{background:#fff;border:1px solid var(--border)}.bs.i{background:var(--indigo);color:#fff}.bs.n{background:var(--navy);color:#fff}
+.bs small{position:absolute;left:18px;bottom:14px;font:600 11px/1 var(--sans);letter-spacing:.06em;opacity:.7}
+.clear{margin-top:16px;display:grid;grid-template-columns:1.1fr 1fr;gap:16px}
+.clear-card{background:#fff;border:1px solid var(--border);border-radius:22px;padding:28px}
+.clear-card h4{font:700 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:14px}
+.clr-demo{position:relative;display:inline-block;padding:var(--x,22px);outline:1.5px dashed var(--violet);transition:padding .3s}
+.clr-demo .brand{font-size:46px}
+.clr-demo::before{content:"x";position:absolute;left:4px;top:50%;font:700 11px/1 var(--sans);color:var(--indigo);transform:translateY(-50%)}
+.dd{display:grid;gap:8px;margin:0;padding:0;list-style:none;font-size:14px;color:var(--ink2)}
+.dd li{display:flex;gap:10px}
+.dd li b{flex:0 0 20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;color:#fff}
+.dd .ok b{background:var(--mint);color:var(--charcoal)}.dd .no b{background:var(--coral)}
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.sw{border:0;padding:0;text-align:left;background:#fff;border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:transform .25s var(--ease)}
+.sw:hover{transform:translateY(-4px)}
+.sw .c{height:110px;display:flex;align-items:flex-end;padding:12px;font:700 12px/1 var(--sans)}
+.sw .i{padding:14px 14px 16px;display:grid;gap:4px;font-size:12.5px;color:var(--ink2);line-height:1.4}
+.sw .i b{font:700 14px/1.2 var(--sans);color:var(--ink)}
+.sw .i code{font:600 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--indigo)}
+.sw .i em{font-style:normal;font-weight:700;font-size:11.5px}
+.sw-group{font:700 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin:34px 0 14px}
+.sw-group:first-child{margin-top:0}
+.rule-box{margin-top:26px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.rule-box div{padding:18px;border-radius:16px;background:#fff;border:1px solid var(--border);font-size:13.5px;color:var(--ink2);line-height:1.5}
+.rule-box b{display:block;color:var(--ink);font-size:15px;margin-bottom:6px}
+.type-grid{display:grid;gap:0;border-top:1.5px solid var(--charcoal)}
+.type-row{display:grid;grid-template-columns:1fr 260px;gap:20px;align-items:baseline;padding:20px 0;border-bottom:1px solid var(--border)}
+.type-row small{font:600 12px/1.4 var(--sans);color:var(--ink3)}
+.fig{border-radius:22px;overflow:hidden;background:#fff;border:1px solid var(--border)}
+.fig img{width:100%;height:auto}
+.fig figcaption{padding:12px 18px;font-size:12.5px;color:var(--ink3);border-top:1px solid var(--border)}
+.cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.demo{border-radius:22px;background:#fff;border:1px solid var(--border);padding:24px;display:grid;gap:16px;align-content:start}
+.demo.dk{background:var(--d-base);border-color:var(--d-border);color:#fff}
+.demo h4{font:700 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+.demo.dk h4{color:var(--d-text2)}
+.state-pick{display:flex;flex-wrap:wrap;gap:6px}
+.state-pick button{min-height:34px;padding:0 12px;border-radius:999px;border:1.5px solid var(--border);background:#fff;font:600 12px/1 var(--sans)}
+.state-pick button[aria-pressed=true]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.field{display:grid;gap:6px}
+.field label{font:700 10px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--text2)}
+.field input{min-height:52px;border-radius:14px;border:1.5px solid var(--border);background:#fff;padding:0 16px;font:500 14px/1 var(--sans);color:var(--ink);transition:border-color .2s,box-shadow .2s}
+.field input:hover{border-color:#c4c9d8}
+.field input:focus{outline:0;border-color:var(--indigo);box-shadow:0 0 0 3px rgba(58,12,163,.16)}
+.field input.is-focus{border-color:var(--indigo);box-shadow:0 0 0 3px rgba(58,12,163,.16)}
+.field input.is-error{border-color:var(--coral)}
+.field input:disabled{background:#EEF0F5;color:var(--text2)}
+.field .hint{font-size:12px;color:var(--text2)}
+.field .hint.err{color:#b3173a}
+.map-demo{display:grid;grid-template-columns:1.2fr 1fr;gap:16px}
+.mapbox{border-radius:22px;overflow:hidden;position:relative}
+.mapbox svg{width:100%;height:auto}
+.mapbox.l{background:#E9EAF5}.mapbox.d{background:#101a30}
+.legend{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.legend li button{width:100%;display:flex;gap:12px;align-items:center;text-align:left;background:#fff;border:1px solid var(--border);border-radius:14px;padding:12px 14px;font-size:14px;transition:border-color .2s}
+.legend li button:hover,.legend li button[aria-pressed=true]{border-color:var(--indigo)}
+.legend i{flex:0 0 26px;height:26px;display:grid;place-items:center}
+.slide-row{display:flex;align-items:center;gap:14px;margin-top:14px;font:600 13px/1 var(--sans)}
+.slide-row input[type=range]{flex:1;accent-color:var(--indigo);min-height:32px}
+.motion-list{display:grid;gap:12px}
+.mo{display:grid;grid-template-columns:150px 1fr 170px;gap:18px;align-items:center;padding:18px 20px;border-radius:18px;background:#fff;border:1px solid var(--border)}
+.mo b{font:700 14px/1.2 var(--sans)}
+.mo p{font-size:13.5px;color:var(--ink2)}
+.mo .stage{height:56px;border-radius:12px;background:var(--off);position:relative;overflow:hidden;display:flex;align-items:center;padding:0 12px}
+.mo .stage .toast{opacity:0;padding:10px 12px;border-radius:10px;background:#DDF7EE;border:1.5px solid var(--mint);font-size:12px;font-weight:700;transition:opacity .2s}
+.mo .stage .toast.on{opacity:1}
+.mo .stage .veh{position:absolute;left:12px;top:50%;width:28px;height:28px;margin-top:-14px;border-radius:50%;background:var(--indigo);transition:left .45s var(--ease)}
+.mo .stage .rl{position:absolute;left:12px;right:12px;top:50%;height:4px;margin-top:-2px;border-radius:2px;background:var(--indigo);transform-origin:left;transform:scaleX(0);transition:transform .45s var(--ease)}
+.mo .stage .rl.on{transform:scaleX(1)}
+.mo .stage .one span{display:inline-block;width:28px;height:28px;border-radius:8px;background:var(--border);margin-right:8px;transition:background .3s,transform .3s}
+.mo .stage .one span.on{background:var(--violet);transform:translateY(-6px)}
+.mo button.play{min-height:44px;border-radius:12px;border:1.5px solid var(--indigo);background:#fff;color:var(--indigo);font:700 13px/1 var(--sans)}
+.mo button.play:hover{background:#EADFFD}
+.states{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.states .demo{padding:20px}
+.toast-s{display:flex;gap:10px;align-items:center;padding:12px 14px;border-radius:12px;font-size:13px;font-weight:700}
+.toast-s.ok{background:#DDF7EE;border:1.5px solid var(--mint)}
+.toast-s.warn{background:#F6F8C9;border:1.5px solid #bfc600}
+.toast-s.err{background:#FFE3E8;border:1.5px solid var(--coral)}
+.toast-s.ld{background:#EADFFD;border:1.5px solid var(--violet)}
+.spin{width:16px;height:16px;border-radius:50%;border:2.5px solid rgba(139,92,246,.3);border-top-color:var(--violet);animation:spin .9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin{animation:none;border-top-color:var(--violet)}}
+
+/* ───────── prototype ───────── */
+.proto{background:var(--off);padding-bottom:clamp(40px,5vw,70px)}
+.proto .sec-head h2 em{color:var(--indigo)}
+.proto-shell{border-radius:30px;background:var(--navy);color:#fff;padding:clamp(18px,3vw,40px);display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,336px) minmax(0,1fr);gap:clamp(20px,3vw,52px);align-items:center;position:relative;overflow:hidden;transition:background .6s var(--ease)}
+.proto-shell[data-role=partner]{background:var(--d-base)}
+.proto-col{display:grid;gap:20px;align-content:center}
+.proto-col h3{font:400 clamp(26px,2.8vw,40px)/1.1 var(--serif)}
+.proto-col p{color:var(--d-text2);font-size:14.5px;max-width:34ch}
+.proto-col.r{padding-left:6px}
+.seg.dk{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.2)}
+.seg.dk button{color:rgba(255,255,255,.8)}
+.seg.dk .thumb{background:var(--orange)}
+.seg.dk button[aria-selected=true]{color:var(--charcoal)}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:2px;max-height:360px;overflow:auto;scrollbar-width:thin}
+.steps button{width:100%;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:center;text-align:left;background:none;border:0;color:rgba(255,255,255,.7);padding:7px 10px;min-height:40px;border-radius:10px;font:600 13px/1.25 var(--sans);transition:background .2s,color .2s}
+.steps button i{font:700 10px/1 var(--sans);letter-spacing:.06em;color:var(--d-text2);font-style:normal}
+.steps button:hover{background:rgba(255,255,255,.06);color:#fff}
+.steps button[aria-current=true]{background:rgba(255,255,255,.1);color:#fff}
+.steps button[aria-current=true] i{color:var(--lemon)}
+.dev{position:relative;width:min(100%,318px);margin-inline:auto}
+.dev-frame{position:relative;padding:9px;border-radius:46px;background:#05080f;box-shadow:0 0 0 2px #2a3854,0 40px 80px -30px rgba(0,0,0,.7)}
+.dev-screen{position:relative;border-radius:38px;overflow:hidden;aspect-ratio:390/844;background:#000}
+.dev-screen img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .45s var(--ease),transform .5s var(--ease)}
+.dev-screen img.cur{opacity:1}
+.dev-screen[data-tr=slide] img{transform:translateX(5%)}
+.dev-screen[data-tr=slide] img.cur{transform:none}
+.dev-screen[data-tr=zoom] img{transform:scale(.985)}
+.dev-screen[data-tr=zoom] img.cur{transform:none}
+.hs{position:absolute;border:0;background:transparent;border-radius:12px;padding:0;cursor:pointer;z-index:3}
+.hs::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 0 2px var(--violet);opacity:0;transition:opacity .2s}
+.dev-screen:hover .hs::after,.hs:focus-visible::after{opacity:.55}
+.hs:hover::after{opacity:1;background:rgba(139,92,246,.14)}
+.hs:focus-visible{outline:2px solid var(--sky);outline-offset:1px}
+.dev-screen.show-hs .hs::after{opacity:.9;animation:hs 1.4s ease-in-out infinite}
+@keyframes hs{50%{opacity:.25}}
+.dev-bar{margin-top:18px;display:flex;gap:4px}
+.dev-bar i{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.2);position:relative;overflow:hidden}
+.dev-bar i b{position:absolute;inset:0;background:var(--violet);transform-origin:0 50%;transform:scaleX(0)}
+.dev-bar i.done b{transform:scaleX(1)}
+.dev-ctl{margin-top:14px;display:flex;justify-content:center;align-items:center;gap:10px}
+.icon-btn{width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(255,255,255,.3);background:transparent;color:#fff;display:grid;place-items:center;transition:background .2s,transform .2s}
+.icon-btn:hover{background:rgba(255,255,255,.1)}
+.icon-btn.main{background:var(--orange);border-color:var(--orange);color:var(--charcoal);width:54px;height:54px}
+.icon-btn svg{width:20px;height:20px}
+.note-card{padding:18px 20px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);display:grid;gap:8px;min-height:150px;align-content:start}
+.proto-shell[data-role=partner] .note-card{background:var(--d-surface);border-color:var(--d-border)}
+.note-card .k{font:700 10px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--lemon)}
+.note-card h4{font:400 24px/1.15 var(--serif)}
+.note-card p{font-size:14px;color:rgba(255,255,255,.82);max-width:none}
+.proto-foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:16px;font-size:12.5px;color:var(--ink3)}
+.status-live{display:inline-flex;align-items:center;gap:8px}
+.status-live::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--mint)}
+.status-live.paused::before{background:var(--text2)}
+
+/* ───────── final screens ───────── */
+.screens{background:#fff;padding-top:clamp(56px,7vw,100px)}
+.screens .sec-head h2 em{color:var(--indigo)}
+.sc-top{display:flex;flex-wrap:wrap;gap:20px;align-items:end;justify-content:space-between;margin-bottom:34px}
+.sc-grp{margin-bottom:clamp(36px,5vw,64px)}
+.sc-grp h3{display:flex;gap:14px;align-items:baseline;font:400 clamp(26px,2.8vw,38px)/1.1 var(--serif);margin-bottom:6px}
+.sc-grp h3 small{font:700 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--indigo)}
+.sc-grp>p{color:var(--ink2);font-size:14px;margin-bottom:22px;max-width:62ch}
+.sc-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,250px));gap:clamp(18px,2.4vw,34px) clamp(14px,2vw,28px);justify-content:start}
+.sc-card{display:grid;gap:12px;background:none;border:0;padding:0;text-align:left}
+.sc-card .im{position:relative;border-radius:26px;overflow:hidden;box-shadow:0 0 0 1.5px var(--border),0 18px 30px -22px rgba(11,29,58,.5);transition:transform .35s var(--ease),box-shadow .35s var(--ease);background:var(--off)}
+.sc-card.dk .im{box-shadow:0 0 0 1.5px var(--d-border),0 18px 30px -22px rgba(11,29,58,.7)}
+.sc-card:hover .im,.sc-card:focus-visible .im{transform:translateY(-6px);box-shadow:0 0 0 2px var(--violet),0 26px 36px -22px rgba(58,12,163,.5)}
+.sc-card img{width:100%;aspect-ratio:390/844;object-fit:cover}
+.sc-card .cap{display:grid;gap:3px}
+.sc-card .cap b{font:700 14px/1.25 var(--sans)}
+.sc-card .cap span{font:600 12px/1.35 var(--sans);color:var(--ink3)}
+.sc-card .cap i{font:700 10px/1 var(--sans);letter-spacing:.1em;color:var(--indigo);font-style:normal}
+.sc-card .zoom{position:absolute;right:10px;top:10px;width:34px;height:34px;border-radius:50%;background:rgba(11,29,58,.82);color:#fff;display:grid;place-items:center;opacity:0;transition:opacity .2s}
+.sc-card:hover .zoom,.sc-card:focus-visible .zoom{opacity:1}
+.sc-card .zoom svg{width:16px;height:16px}
+.lb{position:fixed;inset:0;z-index:120;display:none;background:rgba(7,12,24,.86);align-items:center;justify-content:center;padding:20px}
+.lb.open{display:flex;animation:fade .25s var(--ease)}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.lb-in{width:min(980px,100%);max-height:100%;display:grid;grid-template-columns:auto 1fr;gap:clamp(20px,3vw,48px);align-items:center;color:#fff}
+.lb-img{height:min(86svh,844px);aspect-ratio:390/844;border-radius:38px;overflow:hidden;background:#000;box-shadow:0 0 0 2px var(--d-border),0 30px 80px -20px #000}
+.lb-img img{width:100%;height:100%;object-fit:cover}
+.lb-txt{display:grid;gap:14px;align-content:center;max-width:44ch}
+.lb-txt .k{font:700 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--lemon)}
+.lb-txt h3{font:400 clamp(30px,3.4vw,48px)/1.08 var(--serif)}
+.lb-txt p{color:rgba(255,255,255,.86);font-size:15.5px}
+.lb-txt .why{padding:14px 16px;border-radius:14px;background:rgba(139,92,246,.18);border:1px solid rgba(139,92,246,.5);font-size:14px}
+.lb-nav{display:flex;gap:10px;align-items:center;margin-top:10px}
+.lb-nav .cnt{font:700 12px/1 var(--sans);letter-spacing:.1em;color:var(--d-text2);margin-inline:8px}
+.lb-x{position:absolute;top:18px;right:18px}
+
+/* ───────── reflection + footer ───────── */
+.reflect{background:var(--navy);color:#fff;overflow:hidden;isolation:isolate}
+.reflect .bg{position:absolute;inset:0;z-index:-2}
+.reflect .bg img{width:100%;height:100%;object-fit:cover;object-position:70% 60%}
+.reflect::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(11,29,58,.96) 12%,rgba(11,29,58,.72) 55%,rgba(11,29,58,.45)),linear-gradient(to top,var(--navy),transparent 30%)}
+.reflect h2{font-size:clamp(46px,7.4vw,120px);max-width:11em}
+.reflect h2 em{color:var(--lemon)}
+.rf-grid{margin-top:clamp(40px,6vw,88px);display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,1.6vw,22px)}
+.rf{padding:24px 22px;border-radius:20px;background:rgba(13,20,37,.74);border:1px solid var(--d-border);backdrop-filter:blur(3px);display:grid;gap:12px;align-content:start}
+.rf h3{font:400 24px/1.15 var(--serif)}
+.rf .k{font:700 10px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--lemon)}
+.rf p,.rf li{font-size:14px;color:rgba(255,255,255,.84);line-height:1.55}
+.rf ul{margin:0;padding-left:18px;display:grid;gap:7px}
+.rf.v{border-color:rgba(233,255,91,.5)}
+.disclaim{margin-top:34px;font-size:13px;color:var(--d-text2);max-width:76ch;display:flex;gap:12px}
+.disclaim::before{content:"";flex:0 0 3px;background:var(--lemon);border-radius:2px}
+.foot{background:var(--d-base);color:#fff;padding:44px 0 56px}
+.foot .wrap{display:flex;flex-wrap:wrap;gap:24px 48px;justify-content:space-between;align-items:center}
+.foot small{color:var(--d-text2);font-size:13px;line-height:1.6;max-width:56ch;display:block}
+.foot a.top{color:#fff;font-weight:700;text-decoration:none;border:1.5px solid rgba(255,255,255,.3);padding:12px 20px;border-radius:14px}
+.foot a.top:hover{border-color:#fff}
+
+/* ───────── responsive ───────── */
+@media (max-width:1100px){
+  .proto-shell{grid-template-columns:1fr;justify-items:center}
+  .proto-col{width:100%;max-width:560px}
+  .proto-col.r{order:3;padding:0}
+  .rf-grid{grid-template-columns:repeat(2,1fr)}
+  .eco-detail{grid-template-columns:1fr 1fr}.eco-detail .m{grid-column:1/-1}
+  .states{grid-template-columns:repeat(2,1fr)}
+  .research-strip{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:860px){
+  .ov-grid,.gap-layout,.cjm-head,.bp-note,.cmp-grid,.map-demo,.clear,.personas{grid-template-columns:1fr}
+  .two-sides{height:520px;max-width:520px;margin-inline:auto;width:100%}
+  .gap-sticky{position:sticky;top:0;height:auto;z-index:5;padding:10px 0;background:linear-gradient(#fff 85%,rgba(255,255,255,0))}
+  .gap-step{min-height:62svh;padding-block:24px}
+  .acc-btn{grid-template-columns:36px 1fr 44px;gap:10px}
+  .acc-body{grid-template-columns:1fr}.acc-body .col2,.acc-body .col3{grid-column:1}
+  .brand-stage{grid-template-columns:1fr}
+  .rule-box{grid-template-columns:1fr}
+  .touch-row{grid-template-columns:1fr;gap:6px}.touch-row .arr{display:none}
+  .mo{grid-template-columns:1fr}
+  .lb-in{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .lb-img{height:min(62svh,640px)}
+  .lb-txt .why{text-align:left}
+  .type-row{grid-template-columns:1fr}
+  .hero-top .by{display:none}
+}
+@media (max-width:820px){
+  .hero{min-height:0;display:flex;flex-direction:column}
+  .hero-copy{padding-top:96px;padding-bottom:20px}
+  .hero-photo{position:relative;width:100%;aspect-ratio:1/.86;margin-top:6px;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 12%);mask-image:linear-gradient(to bottom,transparent 0,#000 12%)}
+  .hero-view .cam{width:168%;height:100%;left:auto;right:0;inset:auto}
+  .hero-view .cam{position:absolute;top:0;right:0;bottom:0;left:auto;width:168%}
+  .hero-shade{background:linear-gradient(to bottom,rgba(11,29,58,.5),transparent 30%)}
+  .scroll-cue{position:relative;left:auto;bottom:auto;margin:18px var(--gut) 24px}
+  .hero h1{font-size:clamp(42px,12vw,64px)}
+}
+@media (max-width:640px){
+  .cjm-grid{grid-template-columns:100px repeat(5,minmax(168px,1fr))}
+  .meta{grid-template-columns:1fr}
+  .stat-row{grid-template-columns:1fr}
+  .research-strip{grid-template-columns:repeat(2,1fr)}
+  .rf-grid{grid-template-columns:1fr}
+  .states,.eco-detail{grid-template-columns:1fr}
+  .eco-detail .m{grid-column:auto}
+  .seg button{padding:0 14px;font-size:13px}
+  .sc-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}
+  .photo-band{aspect-ratio:4/3}
+  .ctl{position:static}
+  .tabs{overflow-x:auto;flex-wrap:nowrap}.tabs button{white-space:nowrap}
+}
+
+/* ───────── additions ───────── */
+.hero.off *,.hero.off *::before,.hero.off *::after{animation-play-state:paused!important}
+.dev-screen[data-tr=up] img{transform:translateY(5%)}
+.dev-screen[data-tr=up] img.cur{transform:none}
+.hs.hint::after{opacity:1;background:rgba(139,92,246,.22);animation:hs 1s ease-in-out 2}
+.eco-head{grid-column:1/-1;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.eco-head span:first-child{font:700 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--lemon)}
+.eco-head strong{font:400 clamp(24px,3vw,36px)/1.1 var(--serif);flex:1 1 240px}
+.eco-nav{display:flex;gap:8px}
+.eco-nav button{width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(255,255,255,.3);background:none;color:#fff;font-size:18px}
+.eco-nav button:hover:not(:disabled){background:rgba(255,255,255,.1)}
+.eco-nav button:disabled{opacity:.3;cursor:not-allowed}
+.eco-svg .t{pointer-events:none}
+@media (max-width:760px){.st-node .t{display:none}}
+.eco-card .shots button:focus-visible{outline-color:var(--sky)}
+.sw:focus-visible{outline-offset:2px}
+.layers button:focus-visible,.bp-areas button:focus-visible{outline-offset:2px}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+  .pulse,.ping,.tangle,.eco-flow,.flow,.spin{animation:none!important}
+  .gap-step{opacity:1}
+}
+.sc-card img,.eco-card .shots img,.two-sides .ph img{height:auto}
+.dev{width:min(100%,336px)}
+@media (max-width:860px){
+  .two-sides{height:auto;aspect-ratio:1/1.12;max-width:440px}
+  .two-sides .ph{width:46%}
+  .two-sides .a{left:0;top:6%}
+  .two-sides .b{right:0;top:16%}
+}
+.bn{text-transform:none}
+
+</style>
+</head>
+<body>
+<a class="skip" href="#overview">Skip to case study</a>
+<div class="progress" aria-hidden="true"><i id="pbar"></i></div>
+
+<!-- ═════════ floating navigation ═════════ -->
+<button class="nav-fab" id="navBtn" aria-expanded="false" aria-controls="drawer" aria-label="Open section menu">
+  <svg class="ring" viewBox="0 0 62 62" aria-hidden="true"><circle class="bg" cx="31" cy="31" r="28"/><circle class="fg" id="ringFg" cx="31" cy="31" r="28"/></svg>
+  <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
+</button>
+<div class="scrim" id="scrim"></div>
+<nav class="drawer" id="drawer" aria-label="Case study sections">
+  <a class="brand" href="#top" data-nav-close><svg viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h17M14 6l6 6-6 6"/></svg>transigo</a>
+  <ol id="navList">
+    <li><a href="#overview" data-sec="overview"><small>01</small><span>Overview</span><i class="dot"></i></a></li>
+    <li><a href="#gap" data-sec="gap"><small>02</small><span>The coordination gap</span><i class="dot"></i></a></li>
+    <li><a href="#service" data-sec="service"><small>03</small><span>Service transformation</span><i class="dot"></i></a></li>
+    <li><a href="#connected" data-sec="connected"><small>04</small><span>Connected service</span><i class="dot"></i></a></li>
+    <li><a href="#manual" data-sec="manual"><small>05</small><span>Design manual</span><i class="dot"></i></a></li>
+    <li><a href="#prototype" data-sec="prototype"><small>06</small><span>Interactive prototype</span><i class="dot"></i></a></li>
+    <li><a href="#screens" data-sec="screens"><small>07</small><span>Final screens</span><i class="dot"></i></a></li>
+    <li><a href="#reflection" data-sec="reflection"><small>08</small><span>Reflection</span><i class="dot"></i></a></li>
+  </ol>
+  <p class="foot">Bhargavi · Interaction Design<br>Esc closes this menu. Use ↑ ↓ to move between sections.</p>
+</nav>
+
+<main>
+<!-- ═════════ HERO ═════════ -->
+<header class="hero dark on-dark" id="top" data-sec="top">
+  <div class="hero-top">
+    <a class="brand" href="#top" aria-label="transigo"><svg viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h17M14 6l6 6-6 6"/></svg>transigo</a>
+    <span class="by">Bhargavi · Interaction design case study</span>
+  </div>
+
+  <div class="hero-photo" aria-hidden="true">
+    <div class="hero-view">
+      <div class="cam">
+        <picture>
+          <source srcset="assets/photo/truck-hero.webp" type="image/webp">
+          <img src="assets/photo/truck-hero.jpg" width="1774" height="887" alt="" fetchpriority="high" decoding="async">
+        </picture>
+        <div class="tint"></div>
+        <div class="glow-sun"></div>
+        <div class="glow-head"></div>
+
+        <svg class="hero-svg" viewBox="0 0 1774 887" preserveAspectRatio="xMidYMid slice" focusable="false">
+          <defs>
+            <clipPath id="trailerClip"><polygon points="826,489 1148,378 1160,378 1163,624 826,624"/></clipPath>
+            <mask id="wipeMask" maskUnits="userSpaceOnUse" x="600" y="300" width="700" height="400"><rect class="wipe" x="700" y="340" width="480" height="320" fill="#fff"/></mask>
+            <linearGradient id="cargoShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#060b1a" stop-opacity=".92"/><stop offset=".55" stop-color="#0b1226" stop-opacity=".25"/><stop offset="1" stop-color="#0b1226" stop-opacity="0"/></linearGradient>
+          </defs>
+
+          <!-- speed streaks (beat 1) -->
+          <g class="streaks" fill="none">
+            <line x1="620" y1="812" x2="900" y2="770"/><line x1="1250" y1="868" x2="1560" y2="812"/><line x1="320" y1="860" x2="520" y2="826"/>
+          </g>
+
+          <!-- beat 2 · cutaway: cargo revealed inside the trailer, then solid trailer restored -->
+          <g clip-path="url(#trailerClip)">
+            <g class="cargo-wrap" mask="url(#wipeMask)">
+              <polygon points="826,489 1148,378 1160,378 1163,624 826,624" fill="#0b1226" fill-opacity=".94"/>
+              <line x1="860" y1="383" x2="860" y2="628" stroke="#2a3560" stroke-opacity=".6" stroke-width="2"/><line x1="900" y1="383" x2="900" y2="628" stroke="#2a3560" stroke-opacity=".6" stroke-width="2"/><line x1="940" y1="383" x2="940" y2="628" stroke="#2a3560" stroke-opacity=".6" stroke-width="2"/><line x1="980" y1="383" x2="980" y2="628" stroke="#2a3560" stroke-opacity=".6" stroke-width="2"/><line x1="1020" y1="383" x2="1020" y2="628" stroke="#2a3560" stroke-opacity=".6" stroke-width="2"/><line x1="1060" y1="383" x2="1060" y2="628" stroke="#2a3560" stroke-opacity=".6" stroke-width="2"/><line x1="1100" y1="383" x2="1100" y2="628" stroke="#2a3560" stroke-opacity=".6" stroke-width="2"/><line x1="1140" y1="383" x2="1140" y2="628" stroke="#2a3560" stroke-opacity=".6" stroke-width="2"/>
+<rect x="846" y="572" width="58" height="40" rx="2" fill="#B8895C" stroke="#7a5a38" stroke-width="1.5"/><rect x="870.0" y="572" width="10" height="40" fill="#E8D9B8" opacity=".75"/>
+<rect x="846" y="520" width="58" height="52" rx="2" fill="#C9A06F" stroke="#7a5a38" stroke-width="1.5"/><rect x="870.0" y="520" width="10" height="52" fill="#E8D9B8" opacity=".75"/>
+<rect x="908" y="560" width="52" height="52" rx="2" fill="#C9A06F" stroke="#7a5a38" stroke-width="1.5"/><rect x="929.0" y="560" width="10" height="52" fill="#E8D9B8" opacity=".75"/>
+<rect x="908" y="514" width="52" height="46" rx="2" fill="#C9A06F" stroke="#7a5a38" stroke-width="1.5"/><rect x="929.0" y="514" width="10" height="46" fill="#E8D9B8" opacity=".75"/>
+<rect x="908" y="462" width="52" height="52" rx="2" fill="#BD9163" stroke="#7a5a38" stroke-width="1.5"/><rect x="929.0" y="462" width="10" height="52" fill="#E8D9B8" opacity=".75"/>
+<rect x="964" y="572" width="52" height="40" rx="2" fill="#B8895C" stroke="#7a5a38" stroke-width="1.5"/><rect x="985.0" y="572" width="10" height="40" fill="#E8D9B8" opacity=".75"/>
+<rect x="964" y="526" width="52" height="46" rx="2" fill="#C9A06F" stroke="#7a5a38" stroke-width="1.5"/><rect x="985.0" y="526" width="10" height="46" fill="#E8D9B8" opacity=".75"/>
+<rect x="964" y="486" width="52" height="40" rx="2" fill="#C9A06F" stroke="#7a5a38" stroke-width="1.5"/><rect x="985.0" y="486" width="10" height="40" fill="#E8D9B8" opacity=".75"/>
+<rect x="1020" y="572" width="58" height="40" rx="2" fill="#C9A06F" stroke="#7a5a38" stroke-width="1.5"/><rect x="1044.0" y="572" width="10" height="40" fill="#E8D9B8" opacity=".75"/>
+<rect x="1020" y="532" width="58" height="40" rx="2" fill="#C9A06F" stroke="#7a5a38" stroke-width="1.5"/><rect x="1044.0" y="532" width="10" height="40" fill="#E8D9B8" opacity=".75"/>
+<rect x="1020" y="480" width="58" height="52" rx="2" fill="#B8895C" stroke="#7a5a38" stroke-width="1.5"/><rect x="1044.0" y="480" width="10" height="52" fill="#E8D9B8" opacity=".75"/>
+<rect x="1020" y="440" width="58" height="40" rx="2" fill="#BD9163" stroke="#7a5a38" stroke-width="1.5"/><rect x="1044.0" y="440" width="10" height="40" fill="#E8D9B8" opacity=".75"/>
+<rect x="1082" y="560" width="52" height="52" rx="2" fill="#BD9163" stroke="#7a5a38" stroke-width="1.5"/><rect x="1103.0" y="560" width="10" height="52" fill="#E8D9B8" opacity=".75"/>
+<rect x="1082" y="514" width="52" height="46" rx="2" fill="#B8895C" stroke="#7a5a38" stroke-width="1.5"/><rect x="1103.0" y="514" width="10" height="46" fill="#E8D9B8" opacity=".75"/>
+<rect x="1082" y="474" width="52" height="40" rx="2" fill="#C9A06F" stroke="#7a5a38" stroke-width="1.5"/><rect x="1103.0" y="474" width="10" height="40" fill="#E8D9B8" opacity=".75"/>
+<rect x="1082" y="422" width="52" height="52" rx="2" fill="#D4AE80" stroke="#7a5a38" stroke-width="1.5"/><rect x="1103.0" y="422" width="10" height="52" fill="#E8D9B8" opacity=".75"/>
+<rect x="1138" y="560" width="64" height="52" rx="2" fill="#BD9163" stroke="#7a5a38" stroke-width="1.5"/><rect x="1165.0" y="560" width="10" height="52" fill="#E8D9B8" opacity=".75"/>
+<rect x="1138" y="520" width="64" height="40" rx="2" fill="#BD9163" stroke="#7a5a38" stroke-width="1.5"/><rect x="1165.0" y="520" width="10" height="40" fill="#E8D9B8" opacity=".75"/>
+<rect x="1138" y="474" width="64" height="46" rx="2" fill="#C9A06F" stroke="#7a5a38" stroke-width="1.5"/><rect x="1165.0" y="474" width="10" height="46" fill="#E8D9B8" opacity=".75"/>
+<rect x="1138" y="422" width="64" height="52" rx="2" fill="#C9A06F" stroke="#7a5a38" stroke-width="1.5"/><rect x="1165.0" y="422" width="10" height="52" fill="#E8D9B8" opacity=".75"/>
+<rect x="1060" y="470" width="80" height="142" rx="4" fill="#fff" opacity=".16" stroke="#fff" stroke-opacity=".5"/><path d="M1060 500l80 18M1060 540l80 18M1060 580l80 18" stroke="#fff" stroke-opacity=".35" stroke-width="2"/>
+<rect x="1000" y="612" width="150" height="12" fill="#5b4326"/>
+              <rect x="826" y="378" width="340" height="250" fill="url(#cargoShade)"/>
+            </g>
+            <g class="wipe"><line class="cutline" x1="1180" y1="360" x2="1180" y2="650" stroke="#8B5CF6" stroke-width="4"/></g>
+          </g>
+          <g transform="translate(842 420)"><g class="cargo-tag">
+            <rect width="300" height="40" rx="20" fill="#0B1D3A" fill-opacity=".92" stroke="#8B5CF6" stroke-width="1.5"/>
+            <text x="20" y="26" fill="#fff" font-family="Plus Jakarta Sans, sans-serif" font-size="17" font-weight="700">Cargo on board · 1,200 kg</text>
+          </g></g>
+
+          <!-- beat 3 · the route -->
+          <path class="route-glow" d="M300 792 C640 772 960 770 1280 776 S1600 790 1700 762" fill="none" stroke="#8B5CF6" stroke-width="22" stroke-opacity=".28" stroke-linecap="round"/>
+          <path class="route-b" d="M300 792 C640 772 960 770 1280 776 S1600 790 1700 762" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 13"/>
+          <path class="route-a" pathLength="1" d="M300 792 C640 772 960 770 1280 776 S1600 790 1700 762" fill="none" stroke="#8B5CF6" stroke-width="7" stroke-linecap="round"/>
+
+          <g transform="translate(300 792)"><g class="pin pin-o"><path d="M0 0c-14-18-20-26-20-36a20 20 0 1 1 40 0c0 10-6 18-20 36z" fill="#FF7A00"/><circle cy="-36" r="7" fill="#fff"/></g></g>
+          <g transform="translate(1700 762)"><g class="pin pin-d"><path d="M0 0c-14-18-20-26-20-36a20 20 0 1 1 40 0c0 10-6 18-20 36z" fill="#fff"/><circle cy="-36" r="7" fill="#3A0CA3"/></g></g>
+          <g class="pin pin-o" font-family="Plus Jakarta Sans, sans-serif" font-size="16" font-weight="800"><rect x="268" y="700" width="64" height="30" rx="15" fill="#fff"/><text x="300" y="720" text-anchor="middle" fill="#0B1D3A">Pune</text></g>
+          <g class="pin pin-d" font-family="Plus Jakarta Sans, sans-serif" font-size="16" font-weight="800"><rect x="1648" y="668" width="104" height="30" rx="15" fill="#fff"/><text x="1700" y="688" text-anchor="middle" fill="#0B1D3A">Ahmedabad</text></g>
+
+          <!-- two signals -->
+          <g class="sig sig-d" style="--dx:330px;--dy:-13px"><circle cx="470" cy="784" r="15" fill="none" stroke="#FF7A00" stroke-width="3" class="pulse"/><circle cx="470" cy="784" r="9" fill="#FF7A00"/></g>
+          <g class="sig sig-v" style="--dx:-210px;--dy:71px"><circle cx="1010" cy="700" r="15" fill="none" stroke="#8B5CF6" stroke-width="3" class="pulse"/><circle cx="1010" cy="700" r="9" fill="#8B5CF6" stroke="#fff" stroke-width="2.5"/></g>
+          <g class="sig-tag" font-family="Plus Jakarta Sans, sans-serif" font-size="15" font-weight="700">
+            <g transform="translate(372 722)"><rect width="196" height="34" rx="17" fill="#FF7A00"/><text x="98" y="22" text-anchor="middle" fill="#171922">Load ready · Pune</text></g>
+            <g transform="translate(1030 704)"><rect width="268" height="34" rx="17" fill="#0B1D3A" stroke="#8B5CF6" stroke-width="1.5"/><text x="134" y="22" text-anchor="middle" fill="#fff">28 ft closed truck · available</text></g>
+          </g>
+
+          <!-- beat 4 · match -->
+          <g transform="translate(800 771)"><g class="match">
+            <circle r="30" fill="#3A0CA3" fill-opacity=".92" stroke="#8B5CF6" stroke-width="3"/>
+            <path d="M-12 1l8 8 16-18" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </g></g>
+          <g class="match-chip" font-family="Plus Jakarta Sans, sans-serif" font-size="16" font-weight="800">
+            <g transform="translate(696 704)"><rect width="208" height="36" rx="18" fill="#E9FF5B"/><text x="104" y="24" text-anchor="middle" fill="#171922">Matched on route</text></g>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="hero-shade"></div>
+
+  <div class="hero-copy">
+    <span class="eyebrow">Interaction design · service design · two-sided mobile</span>
+    <h1 class="display">Shipping shouldn’t start with a <em>Google search.</em></h1>
+    <p class="hook">What if the right truck was already on your route?</p>
+    <p class="sub">From finding the right transporter to discovering available vehicles on compatible routes, transigo brings fragmented logistics discovery into one connected network.</p>
+    <div class="hero-cta">
+      <a class="btn btn-action" href="#overview">Explore the case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn btn-ghost" href="#prototype">Try the prototype</a>
+    </div>
+  </div>
+  <a class="scroll-cue" href="#overview"><i></i>Scroll</a>
+</header>
+<div class="hero-edge" aria-hidden="true"></div>
+
+<!-- ═════════ 01 OVERVIEW ═════════ -->
+<section class="overview sec" id="overview" data-sec="overview" aria-labelledby="h-overview">
+  <div class="wrap">
+    <div class="ov-grid">
+      <div class="ov-copy">
+        <span class="eyebrow sec-no reveal">01 · Overview</span>
+        <h2 class="display reveal" id="h-overview" style="margin-top:18px">One network, <em>two sides.</em></h2>
+        <p class="lede reveal">transigo is a connected logistics experience for the people who need goods moved and the transport partners who move them. The project asks one question: what changes if both sides see the same route?</p>
+        <dl class="meta reveal">
+          <div><dt>Designer</dt><dd>Bhargavi</dd></div>
+          <div><dt>Discipline</dt><dd>Interaction &amp; service design</dd></div>
+          <div><dt>Domain</dt><dd>Logistics · Tier-1 &amp; Tier-2 Indian cities</dd></div>
+          <div><dt>Duration</dt><dd>1.5 months</dd></div>
+          <div class="wide"><dt>Scope</dt><dd>Research with 21 people → problem framing → journeys and blueprints → route-first mobile UI → interactive prototype</dd></div>
+        </dl>
+      </div>
+      <div class="two-sides reveal" aria-label="The shipper and transport partner experiences side by side">
+        <span class="tag l">Shipper</span><span class="tag r">Transport partner</span>
+        <svg viewBox="0 0 520 600" preserveAspectRatio="none" aria-hidden="true"><path d="M170 280 C 240 340, 260 330, 300 380" fill="none" stroke="#8B5CF6" stroke-width="3" stroke-dasharray="1 9" stroke-linecap="round"/><circle cx="170" cy="280" r="7" fill="#FF7A00"/><circle cx="300" cy="380" r="7" fill="#3A0CA3"/></svg>
+        <div class="ph a"><img src="assets/screens/02-shipper-home.png" width="390" height="844" alt="transigo shipper home screen with a featured live route and recent shipments" loading="lazy"></div>
+        <div class="ph b"><img src="assets/screens/12-provider-home.png" width="390" height="844" alt="transigo transport partner home screen in the dark workspace showing active trips and available loads" loading="lazy"></div>
+      </div>
+    </div>
+
+    <div class="acc" id="acc">
+      <div class="acc-item">
+        <h3><button class="acc-btn" id="ab1" aria-expanded="false" aria-controls="ap1"><span class="n">01</span><span class="t">The search maze</span><span class="pm" aria-hidden="true"></span></button></h3>
+        <div class="acc-panel" id="ap1" role="region" aria-labelledby="ab1"><div>
+          <div class="acc-body">
+            <div class="col2">
+              <span class="flag">Shipper side · research-backed</span>
+              <p>A shipper starts with a search — “Packers &amp; Movers near me” — then collects two or three quotes by phone, WhatsApp and handwritten estimates. The price is guessed, negotiated and sometimes changed later. Choosing a mover comes down to trust or cost, with nothing to compare against.</p>
+              <div class="quote">“Final prices always change.”<small>Interviewee, shifter segment</small></div>
+              <div class="tags"><span class="tag-s">Google results &amp; ads</span><span class="tag-s">Aggregator sites</span><span class="tag-s">Calls &amp; WhatsApp</span><span class="tag-s">Paper estimates</span></div>
+            </div>
+            <div class="col3">
+              <h4>What the interviews said</h4>
+              <p>“I’m never sure if the driver is verified or trustworthy.”</p>
+              <p>“I wish everything was managed on one platform.”</p>
+              <p class="muted" style="margin-top:14px;font-size:13px">Source: 21 interviews across shifters, business owners, transporters and drivers; service blueprint — booking &amp; transparency.</p>
+            </div>
+          </div>
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <h3><button class="acc-btn" id="ab2" aria-expanded="false" aria-controls="ap2"><span class="n">02</span><span class="t">The invisible route match</span><span class="pm" aria-hidden="true"></span></button></h3>
+        <div class="acc-panel" id="ap2" role="region" aria-labelledby="ab2"><div>
+          <div class="acc-body">
+            <div class="col2">
+              <span class="flag">Transport partner side · design hypothesis</span>
+              <p>On the other side, transporters and movers coordinate trucks, drivers and labour through contact lists, Excel sheets and phone calls. Vehicles are already assigned and moving, but that availability lives in logs and conversations that a shipper never sees.</p>
+              <p>The hypothesis behind transigo: if a vehicle’s route and a shipment’s route were visible in the same place, a match could be found rather than hunted for.</p>
+              <div class="quote">“Delays or cancellations by transportee/drivers. Overreliance on calls/WhatsApp for updates.”<small>Movers &amp; packers persona — frustrations</small></div>
+            </div>
+            <div class="col3">
+              <h4>What is evidenced, what is proposed</h4>
+              <p>Evidenced: manual records, WhatsApp-led coordination, difficulty finding workforce in peak season.</p>
+              <p>Proposed: route-level matching between available vehicles and open loads. This is a design proposal; it has not been tested with live data.</p>
+            </div>
+          </div>
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <h3><button class="acc-btn" id="ab3" aria-expanded="false" aria-controls="ap3"><span class="n">03</span><span class="t">One connected network</span><span class="pm" aria-hidden="true"></span></button></h3>
+        <div class="acc-panel" id="ap3" role="region" aria-labelledby="ab3"><div>
+          <div class="acc-body">
+            <div class="col2">
+              <span class="flag">The response</span>
+              <p>transigo makes the <strong>route</strong> the shared object. A shipper builds a route and cargo; a transport partner sees loads on compatible routes and accepts one. Both then follow the same live route, the same documents and the same status.</p>
+              <p>Two workspaces share one system: a light workspace for shippers and a dark workspace for transport partners, joined by the route language in the design manual.</p>
+            </div>
+            <div class="col3">
+              <h4>Where to see it</h4>
+              <p><a href="#connected">The connected service</a> shows the seven-step route across both sides. <a href="#prototype">The prototype</a> lets you walk either one.</p>
+            </div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ 02 STRATEGY ═════════ -->
+<section class="gap sec" id="gap" data-sec="gap" aria-labelledby="h-gap">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow sec-no reveal">02 · Strategy</span>
+      <h2 class="display reveal" id="h-gap">The <em>coordination</em> gap</h2>
+      <p class="lede reveal">Four beats of reasoning, each tied to something we heard or mapped. Scroll the story — the illustration changes with it.</p>
+    </div>
+
+    <div class="gap-layout">
+      <div class="gap-sticky">
+        <figure class="gap-fig" id="gapFig" data-step="1" style="margin:0">
+          <span class="stepno" id="gapNo">01 / 04</span>
+          <svg viewBox="0 0 520 440" role="img" aria-label="Illustration that changes with each beat of the story" id="gapSvg">
+            <!-- 1 · treasure hunt -->
+            <g class="fig-g g1">
+              <g fill="none"><path class="tangle" d="M96 92 C 200 60, 300 80, 380 70"/><path class="tangle" d="M96 92 C 120 180, 90 220, 100 250"/><path class="tangle" d="M380 70 C 420 130, 400 200, 400 232"/><path class="tangle" d="M100 250 C 200 230, 300 260, 400 232"/><path class="tangle" d="M96 92 C 200 160, 300 200, 400 232"/><path class="tangle" d="M380 70 C 300 140, 180 200, 100 250"/><path class="tangle" d="M100 250 C 150 330, 220 340, 260 360"/><path class="tangle" d="M400 232 C 360 320, 310 340, 260 360"/><path class="tangle" d="M96 92 C 60 200, 130 300, 260 360"/></g>
+              <g class="node" transform="translate(30 70)"><rect width="132" height="44" rx="14"/><text x="66" y="27" text-anchor="middle">Google search</text></g>
+              <g class="node" transform="translate(314 48)"><rect width="132" height="44" rx="14"/><text x="66" y="27" text-anchor="middle">Aggregator sites</text></g>
+              <g class="node" transform="translate(340 210)"><rect width="132" height="44" rx="14"/><text x="66" y="27" text-anchor="middle">Quote 2 · call</text></g>
+              <g class="node" transform="translate(36 228)"><rect width="132" height="44" rx="14"/><text x="66" y="27" text-anchor="middle">Quote 1 · WhatsApp</text></g>
+              <g class="node" transform="translate(196 338)"><rect width="128" height="44" rx="14"/><text x="64" y="27" text-anchor="middle">Paper estimate</text></g>
+              <circle class="ping" cx="262" cy="292" r="9"/>
+              <text x="260" y="416" text-anchor="middle" font-size="13" font-weight="700" fill="#697286">Three quotes. No shared basis to compare.</text>
+            </g>
+            <!-- 2 · vehicle already moving -->
+            <g class="fig-g g2">
+              <rect x="20" y="60" width="480" height="300" rx="22" fill="#E9EAF5"/>
+              <path d="M50 300 C 150 220, 240 280, 320 190 S 440 130, 470 110" fill="none" stroke="#fff" stroke-width="22" stroke-linecap="round"/>
+              <path d="M50 300 C 150 220, 240 280, 320 190 S 440 130, 470 110" fill="none" stroke="#8B5CF6" stroke-width="4" stroke-linecap="round"/>
+              <g><circle cx="150" cy="245" r="14" fill="#8B5CF6" opacity=".25"/><circle cx="150" cy="245" r="8" fill="#3A0CA3"/></g>
+              <g><circle cx="290" cy="215" r="14" fill="#8B5CF6" opacity=".25"/><circle cx="290" cy="215" r="8" fill="#3A0CA3"/></g>
+              <g><circle cx="400" cy="152" r="14" fill="#8B5CF6" opacity=".25"/><circle cx="400" cy="152" r="8" fill="#3A0CA3"/></g>
+              <g transform="translate(64 116)"><path d="M0 0c-10-13-14-19-14-26a14 14 0 1 1 28 0c0 7-4 13-14 26z" fill="#FF7A00"/><circle cy="-26" r="5" fill="#fff"/></g>
+              <path d="M70 118 C 100 170, 130 200, 148 236" fill="none" stroke="#697286" stroke-width="2" stroke-dasharray="3 7" stroke-linecap="round"/>
+              <text x="118" y="170" font-size="26" font-weight="800" fill="#697286">?</text>
+              <g class="node" transform="translate(30 388)"><text x="0" y="0" font-size="13" font-weight="700" fill="#697286">Load waiting here · trucks already moving there.</text></g>
+              <text x="104" y="104" font-size="12" font-weight="700" fill="#171922">Load</text>
+              <text x="410" y="140" font-size="12" font-weight="700" fill="#171922">28 ft truck</text>
+            </g>
+            <!-- 3 · handoff chain -->
+            <g class="fig-g g3">
+              <path d="M60 80 L 200 130 L 100 190 L 250 240 L 160 310 L 330 350" fill="none" stroke="#E2E4EB" stroke-width="3" stroke-linecap="round"/>
+              <g class="node"><rect x="22" y="60" width="104" height="40" rx="13"/><text x="74" y="85" text-anchor="middle">Shifter</text></g>
+              <g class="node"><rect x="150" y="110" width="124" height="40" rx="13"/><text x="212" y="135" text-anchor="middle">Transporter</text></g>
+              <g class="node"><rect x="40" y="170" width="104" height="40" rx="13"/><text x="92" y="195" text-anchor="middle">Driver</text></g>
+              <g class="node"><rect x="190" y="220" width="104" height="40" rx="13"/><text x="242" y="245" text-anchor="middle">Labour</text></g>
+              <g class="node"><rect x="100" y="290" width="124" height="40" rx="13"/><text x="162" y="315" text-anchor="middle">Toll / RTO</text></g>
+              <g class="node"><rect x="290" y="330" width="124" height="40" rx="13"/><text x="352" y="355" text-anchor="middle">Consignee</text></g>
+              <g font-size="11" font-weight="800" fill="#fff"><g transform="translate(140 100)"><rect width="46" height="20" rx="10" fill="#FF4D6D"/><text x="23" y="14" text-anchor="middle">call</text></g><g transform="translate(176 160)"><rect width="46" height="20" rx="10" fill="#FF4D6D"/><text x="23" y="14" text-anchor="middle">call</text></g><g transform="translate(232 190)"><rect width="74" height="20" rx="10" fill="#697286"/><text x="37" y="14" text-anchor="middle">WhatsApp</text></g><g transform="translate(160 262)"><rect width="46" height="20" rx="10" fill="#697286"/><text x="23" y="14" text-anchor="middle">paper</text></g><g transform="translate(260 306)"><rect width="46" height="20" rx="10" fill="#FF4D6D"/><text x="23" y="14" text-anchor="middle">call</text></g></g>
+              <text x="260" y="416" text-anchor="middle" font-size="13" font-weight="700" fill="#697286">Each handoff is a call, a message or a slip.</text>
+            </g>
+            <!-- 4 · network -->
+            <g class="fig-g g4">
+              <path d="M70 230 C 160 160, 360 300, 450 220" fill="none" stroke="#E2E4EB" stroke-width="22" stroke-linecap="round"/>
+              <path d="M70 230 C 160 160, 360 300, 450 220" fill="none" stroke="#8B5CF6" stroke-width="4" stroke-linecap="round"/>
+              <path d="M70 230 C 160 160, 360 300, 450 220" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="1 10" stroke-linecap="round"/>
+              <g transform="translate(70 230)"><path d="M0 0c-12-16-18-23-18-32a18 18 0 1 1 36 0c0 9-6 16-18 32z" fill="#FF7A00"/><circle cy="-32" r="6" fill="#fff"/></g>
+              <g transform="translate(450 220)"><path d="M0 0c-12-16-18-23-18-32a18 18 0 1 1 36 0c0 9-6 16-18 32z" fill="#3A0CA3"/><circle cy="-32" r="6" fill="#fff"/></g>
+              <g transform="translate(260 232)"><circle r="34" fill="#8B5CF6" fill-opacity=".22" class="ping" style="fill:#8B5CF6"/><circle r="26" fill="#3A0CA3"/><path d="M-10 1l7 7 14-15" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>
+              <g class="node"><rect x="30" y="80" width="130" height="40" rx="13"/><text x="95" y="105" text-anchor="middle">Shipper · route</text></g>
+              <g class="node"><rect x="360" y="80" width="130" height="40" rx="13"/><text x="425" y="105" text-anchor="middle">Partner · truck</text></g>
+              <path d="M95 120 C 110 170, 160 190, 240 216" fill="none" stroke="#3A0CA3" stroke-width="2" stroke-dasharray="3 6"/>
+              <path d="M425 120 C 410 170, 360 190, 282 216" fill="none" stroke="#3A0CA3" stroke-width="2" stroke-dasharray="3 6"/>
+              <text x="260" y="330" text-anchor="middle" font-size="14" font-weight="800" fill="#3A0CA3">One route, seen by both sides</text>
+              <text x="260" y="352" text-anchor="middle" font-size="12" font-weight="600" fill="#697286">Illustrative diagram · not live data</text>
+            </g>
+          </svg>
+        </figure>
+      </div>
+
+      <div class="gap-steps" id="gapSteps">
+        <article class="gap-step active" data-step="1">
+          <span class="k">01</span>
+          <h3>Finding a transporter shouldn’t be a treasure hunt</h3>
+          <p>The journey starts with a search engine and ends with a guess. Shifters search “Packers &amp; Movers near me”, receive different quotes from two or three companies and choose on trust or cost. Estimates are calculated manually and often change.</p>
+          <div class="ev"><div class="quote">“Final prices always change.”<small>User quote · research</small></div></div>
+        </article>
+        <article class="gap-step" data-step="2">
+          <span class="k">02</span>
+          <h3>The right vehicle may already be moving</h3>
+          <p>Transporters assign drivers and vehicles from Excel sheets, phone logs and contact lists. Their availability is real, but only visible to the people already in the conversation. A shipper can’t see it; a transporter can’t easily show it.</p>
+          <div class="ev"><div class="quote">“I wish everything was managed on one platform.”<small>User quote · research</small></div></div>
+        </article>
+        <article class="gap-step" data-step="3">
+          <span class="k">03</span>
+          <h3>Every handoff creates another coordination task</h3>
+          <p>Between booking and delivery, a shipment passes through the transporter, driver, labour, checkpoints and the person waiting to receive it. Updates move by call and WhatsApp; proof moves by paper slip.</p>
+          <div class="ev"><div class="quote">“Deliveries often get delayed without updates.”<small>User quote · research</small></div></div>
+        </article>
+        <article class="gap-step" data-step="4">
+          <span class="k">04</span>
+          <h3>What if the network could connect the two?</h3>
+          <p>If a shipment’s route and a vehicle’s route lived in one shared space, discovery could start from the route instead of the search. That is the design question the rest of this case study answers — for both sides.</p>
+          <div class="ev"><a class="btn btn-secondary" href="#service">See the service change <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+        </article>
+      </div>
+    </div>
+
+    <div class="research-strip reveal" aria-label="Research and market context">
+      <div><b>21</b><span>people interviewed — shifters, business owners, transporters, drivers</span></div>
+      <div><b>₹12.81 lakh cr</b><span>India road freight market, 2025 (TAM)</span></div>
+      <div><b>8.95%</b><span>projected CAGR to ₹19.66 lakh crore by 2030</span></div>
+      <div><b>₹6.2 lakh cr</b><span>SME-driven segment (SAM), ≈45% of freight</span></div>
+      <div><b>₹12,350 cr</b><span>2% of the SME segment as a near-term target (SOM)</span></div>
+      <div><b>5 + 5</b><span>role journeys and five blueprint areas mapped</span></div>
+    </div>
+
+    <div class="personas reveal">
+      <article class="persona">
+        <div class="who"><h4>Amrita Patel</h4><span class="meta-l">Shifter · 27 · Pune · end-user</span></div>
+        <p class="muted" style="font-style:italic;font-family:var(--serif);font-size:20px;line-height:1.25;color:var(--charcoal)">“I just want my things to reach safely without me calling ten times for updates.”</p>
+        <span class="need">Needs</span>
+        <ul><li>Safe, transparent relocation without stress</li><li>Real-time updates and cost clarity</li></ul>
+        <span class="need">Frustrations</span>
+        <ul><li>Confusing paperwork and hidden costs</li><li>No verified driver or transporter information</li><li>Delivery earlier or later than promised, with no notice</li></ul>
+      </article>
+      <article class="persona">
+        <div class="who"><h4>Amit Sharma</h4><span class="meta-l">Movers &amp; packers owner · 40 · Ahmedabad · service provider</span></div>
+        <p class="muted" style="font-style:italic;font-family:var(--serif);font-size:20px;line-height:1.25;color:var(--charcoal)">“We rely on local labour and trust; if one thing goes wrong, the whole job gets delayed.”</p>
+        <span class="need">Needs</span>
+        <ul><li>Smooth coordination between client, labour and driver</li><li>Verified drivers, real-time tracking, digital proof of delivery</li></ul>
+        <span class="need">Frustrations</span>
+        <ul><li>Delays or cancellations by drivers; manual record-keeping</li><li>Overreliance on calls and WhatsApp for updates</li><li>Finding workforce in peak season</li></ul>
+      </article>
+    </div>
+
+    <figure class="photo-band reveal" style="margin-bottom:0">
+      <img src="assets/photo/night-truck.webp" width="1600" height="652" alt="A closed freight truck on a highway at night with route markers drawn over the road" loading="lazy">
+      <figcaption>A route is already a shared fact. The hard part is making it visible to everyone who needs it.<small>Design principle behind <span class="bn">transigo</span></small></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ═════════ 03 SERVICE TRANSFORMATION ═════════ -->
+<section class="service sec" id="service" data-sec="service" aria-labelledby="h-service">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow sec-no reveal">03 · Service design</span>
+      <h2 class="display reveal" id="h-service">The service <em>transformation</em></h2>
+      <p class="lede reveal">Start with how each role works today, then switch to the design response. The journey maps show feelings and breakdowns; the blueprint shows what the service has to do behind each moment.</p>
+    </div>
+
+    <div class="ctl" role="group" aria-label="Service view controls">
+      <span class="lbl">Role</span>
+      <div class="seg" id="roleSeg" role="tablist" aria-label="Role"><span class="thumb"></span>
+        <button role="tab" id="role-s" aria-selected="true" data-role="shifter">Shifter</button>
+        <button role="tab" id="role-p" aria-selected="false" data-role="partner" tabindex="-1">Transport partner</button>
+      </div>
+      <span class="lbl">View</span>
+      <div class="seg" id="stateSeg" role="tablist" aria-label="View"><span class="thumb"></span>
+        <button role="tab" id="st-b" aria-selected="true" data-state="before">Before</button>
+        <button role="tab" id="st-a" aria-selected="false" data-state="after" tabindex="-1">The transigo experience</button>
+      </div>
+    </div>
+
+    <div class="svc-who" id="svcWho" role="group" aria-label="Journey persona"></div>
+
+    <div class="cjm" id="cjm" data-state="before">
+      <div class="cjm-head">
+        <h3 id="cjmTitle"></h3>
+        <p id="cjmSub"></p>
+      </div>
+      <div class="cjm-grid" id="cjmGrid" role="table" aria-label="Customer journey map"></div>
+    </div>
+    <p class="caveat">Journey maps are taken from the project’s research artefacts. “Before” highlights where the journey breaks; “The transigo experience” swaps in the opportunity designed for each stage. It describes the proposed service, not a live one.</p>
+
+    <div class="bp">
+      <span class="eyebrow">Service blueprint</span>
+      <h3 style="margin-top:10px">What the service does behind each moment</h3>
+      <p class="lede">Five blueprint areas cover coordination, packing and loading, booking, transit and delivery. Choose an area, then peel the layers back one at a time.</p>
+      <div class="bp-areas" id="bpAreas" role="tablist" aria-label="Blueprint area"></div>
+      <div class="layers" id="bpLayers" role="group" aria-label="Blueprint layers"><span class="lbl">Layers</span></div>
+      <div class="bp-board" id="bpBoard"><div class="bp-phases" id="bpPhases"></div></div>
+      <div class="bp-note">
+        <div class="break-box"><h4>Where it breaks today</h4><p id="bpBreak"></p></div>
+        <div class="change-box"><h4>What <span class="bn">transigo</span> changes</h4><p id="bpChange"></p></div>
+      </div>
+      <div class="touch" id="touch" aria-live="polite"></div>
+      <p class="caveat">The blueprint “after” view is a single redefined blueprint covering all phases; selecting an area highlights where that area is most active. The proposed service has not been operated or measured.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ 04 CONNECTED SERVICE ═════════ -->
+<section class="connected sec" id="connected" data-sec="connected" aria-labelledby="h-connected">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow sec-no reveal">04 · The connected service</span>
+      <h2 class="display reveal" id="h-connected">One network. <em>Two distinct</em> experiences.</h2>
+      <p class="lede reveal">Seven steps carry a shipment from choosing a workspace to a closed record. Each step has a shipper screen, a transport-partner screen and the information that passes between them. Select a step.</p>
+    </div>
+
+    <div class="eco">
+      <div class="eco-lane-l"><span class="s">Shipper · light workspace</span><span class="p">Transport partner · dark workspace</span></div>
+      <svg class="eco-svg" viewBox="0 0 1120 210" role="group" aria-label="Seven-step route">
+        <path class="eco-route" d="M60 110 C 220 40, 280 180, 440 110 S 700 40, 820 110 S 1000 170, 1060 100" fill="none"/>
+        <path class="eco-route dot" d="M60 110 C 220 40, 280 180, 440 110 S 700 40, 820 110 S 1000 170, 1060 100" fill="none"/>
+        <path class="eco-flow" d="M60 110 C 220 40, 280 180, 440 110 S 700 40, 820 110 S 1000 170, 1060 100"/>
+        <g id="ecoNodes"></g>
+      </svg>
+      <div class="eco-detail" id="ecoDetail" aria-live="polite"></div>
+    </div>
+    <p class="caveat" style="margin-top:14px">Screens, routes, prices and records are prototype data. The transport-partner side of the prototype currently covers loads, acceptance, active trip, fleet and earnings; it does not yet include a feedback or dispute flow.</p>
+  </div>
+</section>
+
+<!-- ═════════ 05 DESIGN MANUAL ═════════ -->
+<section class="manual sec" id="manual" data-sec="manual" aria-labelledby="h-manual">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow sec-no reveal">05 · Design manual</span>
+      <h2 class="display reveal" id="h-manual">The transigo <em>Design Manual</em></h2>
+      <p class="lede reveal">Route-first UI: the route is the signature, and the interface does the work. One system, two workspaces — light for shippers, dark for transport partners. Everything here is the current V2 system.</p>
+    </div>
+
+    <div class="tabs" id="mTabs" role="tablist" aria-label="Design manual chapters">
+      <button role="tab" id="mt-brand" aria-selected="true" aria-controls="mp-brand" data-tab="brand">Brand language</button>
+      <button role="tab" id="mt-colour" aria-selected="false" aria-controls="mp-colour" data-tab="colour" tabindex="-1">Colour</button>
+      <button role="tab" id="mt-type" aria-selected="false" aria-controls="mp-type" data-tab="type" tabindex="-1">Typography</button>
+      <button role="tab" id="mt-comp" aria-selected="false" aria-controls="mp-comp" data-tab="comp" tabindex="-1">Components</button>
+      <button role="tab" id="mt-route" aria-selected="false" aria-controls="mp-route" data-tab="route" tabindex="-1">Route &amp; map language</button>
+      <button role="tab" id="mt-motion" aria-selected="false" aria-controls="mp-motion" data-tab="motion" tabindex="-1">Interaction language</button>
+    </div>
+
+    <!-- brand -->
+    <div class="tp" id="mp-brand" role="tabpanel" aria-labelledby="mt-brand">
+      <div class="brand-stage">
+        <div class="bs l"><a class="brand" style="color:#0B1D3A;pointer-events:none"><svg viewBox="0 0 24 24" fill="none" stroke="#3A0CA3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h17M14 6l6 6-6 6"/></svg>transigo</a><small>On white · indigo symbol, navy wordmark</small></div>
+        <div class="bs i"><a class="brand" style="pointer-events:none"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h17M14 6l6 6-6 6"/></svg>transigo</a><small>On Persian Indigo · all white</small></div>
+        <div class="bs n"><a class="brand" style="pointer-events:none"><svg viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h17M14 6l6 6-6 6"/></svg>transigo</a><small>On Deep Navy · violet symbol, white wordmark</small></div>
+      </div>
+      <div class="clear">
+        <div class="clear-card">
+          <h4>Clear space</h4>
+          <div class="clr-demo" id="clrDemo"><a class="brand" style="color:#0B1D3A;pointer-events:none"><svg viewBox="0 0 24 24" fill="none" stroke="#3A0CA3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h17M14 6l6 6-6 6"/></svg>transigo</a></div>
+          <div class="slide-row"><label for="clrRange">Space around the mark</label><input type="range" id="clrRange" min="4" max="48" value="22"><output id="clrOut">22 px</output></div>
+        </div>
+        <div class="clear-card">
+          <h4>Brand rules</h4>
+          <ul class="dd">
+            <li class="ok"><b>✓</b><span>transigo is always lowercase — in headlines, UI and body copy.</span></li>
+            <li class="ok"><b>✓</b><span>The arrow symbol keeps its proportions; scale it with the wordmark.</span></li>
+            <li class="ok"><b>✓</b><span>DM Serif Display for the wordmark and selective editorial emphasis.</span></li>
+            <li class="no"><b>×</b><span>No capital letters in the wordmark, in any context.</span></li>
+            <li class="no"><b>×</b><span>No gradients, glow or outline effects on the mark.</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="rule-box">
+        <div><b>Route-first</b>The route is the signature. Maps, markers and status all come from one line.</div>
+        <div><b>Two workspaces, one system</b>Light for shipper, dark for provider; the same components, tokens and motion.</div>
+        <div><b>Restrained accents</b>Violet marks the route and selection. Orange is reserved for decisive actions.</div>
+      </div>
+    </div>
+
+    <!-- colour -->
+    <div class="tp" id="mp-colour" role="tabpanel" aria-labelledby="mt-colour" hidden>
+      <p class="lede" style="margin-bottom:26px">Contrast is computed against white and charcoal. Where a pairing falls below 4.5:1 the swatch says so; those pairings are limited to large text, icons and fills, never small text. Select a swatch to copy its hex value.</p>
+      <div id="swatches"></div>
+      <figure class="fig" style="margin-top:28px"><img src="assets/ds/colour.png" width="1460" height="790" alt="Design system colour board from the V2 Figma file" loading="lazy"><figcaption>Source: Design System V2 · colour board</figcaption></figure>
+    </div>
+
+    <!-- type -->
+    <div class="tp" id="mp-type" role="tabpanel" aria-labelledby="mt-type" hidden>
+      <p class="lede" style="margin-bottom:26px">DM Serif Display for selective editorial emphasis. Plus Jakarta Sans for everything that works. Minimum 11 px for metadata; 10 px only for short uppercase labels.</p>
+      <div class="type-grid">
+        <div class="type-row"><span style="font:400 32px/1.1 var(--serif)">Movement, made clearer.</span><small>DM Serif Display · 32 · Display / opening headline</small></div>
+        <div class="type-row"><span style="font:400 24px/1.2 var(--serif)">Start with the route.</span><small>DM Serif Display · 24 · Selective screen headline</small></div>
+        <div class="type-row"><span style="font:700 22px/1.2 var(--sans)">Transport options</span><small>Plus Jakarta Sans Bold · 22 · Screen title</small></div>
+        <div class="type-row"><span style="font:700 16px/1.3 var(--sans)">Section heading</span><small>Plus Jakarta Sans Bold · 16 · Section heading</small></div>
+        <div class="type-row"><span style="font:400 14px/1.5 var(--sans)">Body copy stays readable at arm’s length on a phone.</span><small>Plus Jakarta Sans Regular · 14 · Body</small></div>
+        <div class="type-row"><span style="font:500 13px/1.4 var(--sans)">Field text and primary metadata</span><small>Plus Jakarta Sans Medium · 13 · Field and metadata</small></div>
+        <div class="type-row"><span style="font:400 11px/1.4 var(--sans)">Secondary metadata never goes below 11 px</span><small>Plus Jakarta Sans Regular · 11 · Secondary metadata</small></div>
+        <div class="type-row"><span style="font:700 10px/1.4 var(--sans);letter-spacing:.1em">SMALL UPPERCASE LABEL</span><small>Plus Jakarta Sans Bold · 10 · Uppercase label, used selectively</small></div>
+      </div>
+      <figure class="fig" style="margin-top:28px"><img src="assets/ds/type.png" width="1460" height="430" alt="Type ramp from the V2 design system board" loading="lazy"><figcaption>Source: Design System V2 · typography ramp</figcaption></figure>
+    </div>
+
+    <!-- components -->
+    <div class="tp" id="mp-comp" role="tabpanel" aria-labelledby="mt-comp" hidden>
+      <div class="cmp-grid">
+        <div class="demo">
+          <h4>Buttons · 52 px tall</h4>
+          <div class="state-pick" id="btnStates" role="group" aria-label="Button state"><button aria-pressed="true" data-s="default">Default</button><button aria-pressed="false" data-s="hover">Hover</button><button aria-pressed="false" data-s="focus">Focus</button><button aria-pressed="false" data-s="disabled">Disabled</button></div>
+          <div style="display:grid;gap:10px" id="btnDemo">
+            <button class="btn btn-primary">Get started <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+            <button class="btn btn-action">Accept load</button>
+            <button class="btn btn-secondary">Edit route</button>
+            <button class="btn btn-danger">Cancel booking</button>
+            <button class="btn btn-ghost">Continue</button>
+          </div>
+          <p class="muted" style="font-size:13px">Primary for the main task, Orange Action only for decisive commits, Secondary and Tertiary for supporting steps.</p>
+        </div>
+        <div class="demo">
+          <h4>Text field · four states</h4>
+          <div class="field"><label for="f1">Weight</label><input id="f1" value="1,200 kg"><span class="hint">We use this to match vehicles.</span></div>
+          <div class="field"><label for="f2">Weight</label><input id="f2" class="is-focus" value="1,200 kg"><span class="hint">Focused — indigo border and soft ring.</span></div>
+          <div class="field"><label for="f3">Weight</label><input id="f3" class="is-error" value="0 kg" aria-invalid="true" aria-describedby="f3h"><span class="hint err" id="f3h">Enter a weight above 0 kg.</span></div>
+          <div class="field"><label for="f4">Weight</label><input id="f4" value="1,200 kg" disabled><span class="hint">Locked after booking.</span></div>
+        </div>
+      </div>
+      <div class="demo" style="margin-bottom:16px">
+        <h4>Status chips · every status has a label as well as a dot</h4>
+        <div style="display:flex;flex-wrap:wrap;gap:10px"><span class="chip transit">In transit</span><span class="chip delivered">Delivered</span><span class="chip attn">Attention required</span><span class="chip delay">Delayed</span><span class="chip pending">Pending</span><span class="chip proc">Processing</span></div>
+        <div class="dark" style="display:flex;flex-wrap:wrap;gap:10px;padding:16px;border-radius:16px;background:var(--d-base)"><span class="chip d transit">In transit</span><span class="chip d delivered">Delivered</span><span class="chip d attn">Attention required</span><span class="chip d delay">Delayed</span><span class="chip d pending">Pending</span><span class="chip d proc">Processing</span></div>
+      </div>
+      <figure class="fig"><img src="assets/ds/components.png" width="1460" height="286" alt="Shipment, load, vehicle and payout row components from the V2 design system" loading="lazy"><figcaption>Repeated rows are components with text properties — a new load, vehicle or payout is a property change, not a redraw.</figcaption></figure>
+      <figure class="fig" style="margin-top:16px"><img src="assets/ds/nav.png" width="1460" height="150" alt="Shipper and provider bottom navigation" loading="lazy"><figcaption>Navigation · Shipper: Home, Shipments, Track, More · Provider: Home, Loads, Fleet, Earnings.</figcaption></figure>
+    </div>
+
+    <!-- route -->
+    <div class="tp" id="mp-route" role="tabpanel" aria-labelledby="mt-route" hidden>
+      <p class="lede" style="margin-bottom:22px">Orange is the pickup; indigo (white on dark) is the destination. The travelled route is solid, the remaining route dotted. The vehicle marker carries a Route Pulse ring. Maps here are illustrative route diagrams, not live map data.</p>
+      <div class="map-demo">
+        <div>
+          <div class="mapbox l" id="mapLight"></div>
+          <div class="slide-row"><label for="routeRange">Journey progress</label><input type="range" id="routeRange" min="0" max="100" value="46"><output id="routeOut">46%</output></div>
+        </div>
+        <ul class="legend" id="legend"></ul>
+      </div>
+      <div class="mapbox d" id="mapDark" style="margin-top:16px"></div>
+      <figure class="fig" style="margin-top:16px"><img src="assets/ds/route.png" width="1460" height="326" alt="Route visuals and marker legend from the V2 design system" loading="lazy"><figcaption>Source: Design System V2 · route visuals and markers</figcaption></figure>
+    </div>
+
+    <!-- motion -->
+    <div class="tp" id="mp-motion" role="tabpanel" aria-labelledby="mt-motion" hidden>
+      <p class="lede" style="margin-bottom:22px">Route Pulse: the route links origin, destination, vehicle and state. Motion explains a change; it never decorates. Try each principle.</p>
+      <div class="motion-list">
+        <div class="mo"><b>1 · Reveal</b><p>A route line reveals or changes state when a journey begins or updates. 300 to 450 ms, ease in and out.</p><div><div class="stage" aria-hidden="true"><div class="rl" id="moRl"></div></div><button class="play" data-mo="reveal" style="margin-top:8px;width:100%">Play</button></div></div>
+        <div class="mo"><b>2 · Move</b><p>The vehicle marker slides along the route using Smart Animate with identical layer names; ETA, remaining distance and status update in the same transition.</p><div><div class="stage" aria-hidden="true"><div class="veh" id="moVeh"></div></div><button class="play" data-mo="move" style="margin-top:8px;width:100%">Play</button></div></div>
+        <div class="mo"><b>3 · Confirm</b><p>Sheets and toasts fade in over about 200 ms. No celebration animation.</p><div><div class="stage"><div class="toast" id="moToast">Document added</div></div><button class="play" data-mo="confirm" style="margin-top:8px;width:100%">Play</button></div></div>
+        <div class="mo"><b>4 · One at a time</b><p>Only the element that changed moves. No looping animation.</p><div><div class="stage" aria-hidden="true"><div class="one" id="moOne"><span></span><span></span><span></span><span></span></div></div><button class="play" data-mo="one" style="margin-top:8px;width:100%">Play</button></div></div>
+        <div class="mo"><b>5 · Reduced motion</b><p>With reduced motion on, state changes cut instantly and the Route Pulse ring stays static. This page honours your system setting.</p><div><div class="stage"><span class="chip proc" id="rmState">Checking…</span></div></div></div>
+      </div>
+      <h3 style="font:400 28px/1.1 var(--serif);margin:36px 0 14px">Feedback states</h3>
+      <div class="states">
+        <div class="demo"><h4>Loading</h4><div class="toast-s ld"><span class="spin"></span>Finding vehicles on your route…</div></div>
+        <div class="demo"><h4>Success</h4><div class="toast-s ok">✓ Booking confirmed</div></div>
+        <div class="demo"><h4>Attention</h4><div class="toast-s warn">Document needed before pickup</div></div>
+        <div class="demo"><h4>Error</h4><div class="toast-s err">Weight must be above 0 kg. Enter it to continue.</div></div>
+      </div>
+      <figure class="fig" style="margin-top:16px"><img src="assets/ds/motion.png" width="1460" height="276" alt="Motion principles from the V2 design system" loading="lazy"><figcaption>Source: Design System V2 · motion principles</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ 06 PROTOTYPE ═════════ -->
+<section class="proto sec" id="prototype" data-sec="prototype" aria-labelledby="h-proto">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow sec-no reveal">06 · Interactive prototype</span>
+      <h2 class="display reveal" id="h-proto">Walk <em>both</em> sides</h2>
+      <p class="lede reveal">The real V2 screens, wired from the Figma prototype. It plays on its own; tap anywhere on a screen to take over, then it resumes after a pause. Switch role to follow a shipper or a transport partner.</p>
+    </div>
+
+    <div class="proto-shell" id="proto" data-role="shipper">
+      <div class="proto-col">
+        <div class="seg dk" id="protoRole" role="tablist" aria-label="Prototype role" style="width:max-content"><span class="thumb"></span>
+          <button role="tab" id="pr-s" aria-selected="true" data-role="shipper">Shipper</button>
+          <button role="tab" id="pr-p" aria-selected="false" data-role="partner" tabindex="-1">Transport partner</button>
+        </div>
+        <h3 id="protoTitle">Shipper · light workspace</h3>
+        <p id="protoLede">Create a route, describe cargo, compare transport and follow it live.</p>
+        <ol class="steps" id="protoSteps" aria-label="Prototype steps"></ol>
+      </div>
+
+      <div>
+        <div class="dev">
+          <div class="dev-frame">
+            <div class="dev-screen" id="devScreen" data-tr="fade" aria-live="off"></div>
+          </div>
+          <div class="dev-bar" id="devBar" aria-hidden="true"></div>
+          <div class="dev-ctl">
+            <button class="icon-btn" id="pPrev" aria-label="Previous screen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <button class="icon-btn main" id="pPlay" aria-label="Pause autoplay" aria-pressed="true"><svg id="pPlayIco" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></button>
+            <button class="icon-btn" id="pNext" aria-label="Next screen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="proto-col r">
+        <div class="note-card" id="protoNote" aria-live="polite"></div>
+        <label style="display:flex;gap:10px;align-items:center;font-size:13px;color:var(--d-text2);min-height:44px"><input type="checkbox" id="showHs" style="width:18px;height:18px;accent-color:#8B5CF6"> Show tappable areas</label>
+        <span class="status-live" id="protoStatus" style="font-size:12.5px;color:var(--d-text2)">Autoplay on</span>
+      </div>
+    </div>
+    <div class="proto-foot"><span>All figures, routes and records are prototype data. The proposed experience is not a live service.</span><span>Keyboard: ← → move between screens · Space toggles autoplay</span></div>
+  </div>
+</section>
+
+<!-- ═════════ 07 FINAL SCREENS ═════════ -->
+<section class="screens sec" id="screens" data-sec="screens" aria-labelledby="h-screens">
+  <div class="wrap">
+    <div class="sc-top">
+      <div class="sec-head" style="margin:0">
+        <span class="eyebrow sec-no">07 · Final high-fidelity screens</span>
+        <h2 class="display" id="h-screens">The final <em>screens</em></h2>
+        <p class="lede">Select any screen for a larger view with the reasoning behind it.</p>
+      </div>
+      <div class="seg" id="scRole" role="tablist" aria-label="Screens role"><span class="thumb"></span>
+        <button role="tab" id="sr-s" aria-selected="true" data-role="shipper">Shipper</button>
+        <button role="tab" id="sr-p" aria-selected="false" data-role="partner" tabindex="-1">Transport partner</button>
+      </div>
+    </div>
+    <div id="scGroups"></div>
+  </div>
+</section>
+
+<!-- ═════════ 08 REFLECTION ═════════ -->
+<section class="reflect sec" id="reflection" data-sec="reflection" aria-labelledby="h-reflect">
+  <div class="bg" aria-hidden="true"><img src="assets/photo/sunset-sky.webp" width="894" height="430" alt="" loading="lazy"></div>
+  <div class="wrap">
+    <span class="eyebrow sec-no lt" style="color:var(--lemon)">08 · Reflection</span>
+    <h2 class="display" id="h-reflect" style="margin-top:18px">From scattered searches to <em>connected movement.</em></h2>
+    <div class="rf-grid">
+      <div class="rf v"><span class="k">What I set out to do</span><h3>Make the route the shared object</h3><p>Research showed fragmented discovery on both sides. I used the route as the one thing a shipper and a transport partner could both see, and designed every screen around it.</p></div>
+      <div class="rf"><span class="k">Decisions I’d defend</span><h3>Restraint, on purpose</h3><ul><li>Two workspaces, one system: light and dark, same components</li><li>Orange only for decisive commits</li><li>Motion only when it explains a change</li></ul></div>
+      <div class="rf"><span class="k">What isn’t proven</span><h3>Honest limits</h3><ul><li>Not usability-tested; no outcomes or adoption are claimed</li><li>Matching logic, prices and tracking are prototype data</li><li>Transport-partner side has no feedback or dispute flow yet</li></ul></div>
+      <div class="rf"><span class="k">What I’d do next</span><h3>Test the match</h3><ul><li>Usability-test the shipper request flow with real shifters</li><li>Test whether partners trust a suggested load</li><li>Prototype the feedback loop on both sides</li></ul></div>
+    </div>
+    <p class="disclaim">This case study describes a student concept. It documents research, design decisions and a prototype; it does not describe a launched product or measured business results.</p>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div><a class="brand" href="#top"><svg viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h17M14 6l6 6-6 6"/></svg>transigo</a>
+    <small style="margin-top:12px">Case study by Bhargavi · Interaction Design, UID · Karnavati University. All screens, figures and routes are prototype data.</small></div>
+    <a class="top" href="#top">Back to top ↑</a>
+  </div>
+</footer>
+
+<!-- lightbox -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-labelledby="lbT" aria-hidden="true">
+  <button class="icon-btn lb-x" id="lbX" aria-label="Close screen view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <div class="lb-in">
+    <div class="lb-img"><img id="lbImg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="390" height="844"></div>
+    <div class="lb-txt">
+      <span class="k" id="lbK"></span>
+      <h3 id="lbT"></h3>
+      <p id="lbP"></p>
+      <div class="why" id="lbW"></div>
+      <div class="lb-nav">
+        <button class="icon-btn" id="lbPrev" aria-label="Previous screen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <span class="cnt" id="lbC"></span>
+        <button class="icon-btn" id="lbNext" aria-label="Next screen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+var RM = window.matchMedia('(prefers-reduced-motion: reduce)');
+var $ = function(s,r){return (r||document).querySelector(s)};
+var $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var h = function(tag,attrs,kids){var e=document.createElement(tag);if(attrs)for(var k in attrs){if(k==='class')e.className=attrs[k];else if(k==='html')e.innerHTML=attrs[k];else if(k==='text')e.textContent=attrs[k];else e.setAttribute(k,attrs[k]);}(kids||[]).forEach(function(c){if(c)e.appendChild(c)});return e;};
+var NS='http://www.w3.org/2000/svg';
+var sv=function(tag,attrs){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);return e;};
+var segs=[];
+function safe(fn){try{return fn()}catch(e){return null}}
+
+/* ───────── segmented controls ───────── */
+function seg(root,onChange){
+  var btns=$$('[role=tab]',root),thumb=$('.thumb',root);
+  function place(){var sel=btns.filter(function(b){return b.getAttribute('aria-selected')==='true'})[0];if(!sel||!thumb||!sel.offsetWidth)return;thumb.style.width=sel.offsetWidth+'px';thumb.style.transform='translateX('+(sel.offsetLeft-4)+'px)';}
+  function select(b,focus,silent){btns.forEach(function(x){var on=x===b;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1;});place();if(focus)b.focus();if(!silent&&onChange)onChange(b);}
+  btns.forEach(function(b,i){
+    b.addEventListener('click',function(){select(b)});
+    b.addEventListener('keydown',function(e){var n=null;if(e.key==='ArrowRight'||e.key==='ArrowDown')n=btns[(i+1)%btns.length];else if(e.key==='ArrowLeft'||e.key==='ArrowUp')n=btns[(i-1+btns.length)%btns.length];else if(e.key==='Home')n=btns[0];else if(e.key==='End')n=btns[btns.length-1];if(n){e.preventDefault();select(n,true);}});
+  });
+  var api={select:function(val,attr){var b=btns.filter(function(x){return x.getAttribute('data-'+(attr||'role'))===val})[0];if(b)select(b,false,true);},place:place};
+  segs.push(api);place();return api;
+}
+function placeAll(){segs.forEach(function(s){s.place()})}
+window.addEventListener('resize',placeAll);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(placeAll);
+window.addEventListener('load',placeAll);
+
+/* ───────── reveal ───────── */
+(function(){
+  var els=$$('.reveal,.draw');
+  if(!('IntersectionObserver' in window)||RM.matches){els.forEach(function(e){e.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px',threshold:.08});
+  els.forEach(function(e){io.observe(e)});
+})();
+
+/* ───────── nav drawer, progress, active section ───────── */
+(function(){
+  var btn=$('#navBtn'),drawer=$('#drawer'),scrim=$('#scrim'),links=$$('#navList a'),ring=$('#ringFg'),bar=$('#pbar');
+  var last=null;
+  function open(){drawer.classList.add('open');scrim.classList.add('open');btn.setAttribute('aria-expanded','true');btn.setAttribute('aria-label','Close section menu');last=document.activeElement;var cur=links.filter(function(a){return a.getAttribute('aria-current')==='true'})[0]||links[0];setTimeout(function(){cur.focus()},60);}
+  function close(ret){drawer.classList.remove('open');scrim.classList.remove('open');btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open section menu');if(ret!==false)btn.focus();}
+  btn.addEventListener('click',function(){drawer.classList.contains('open')?close():open()});
+  scrim.addEventListener('click',function(){close()});
+  $$('[data-nav-close]').forEach(function(a){a.addEventListener('click',function(){close(false)})});
+  links.forEach(function(a,i){
+    a.addEventListener('click',function(){close(false)});
+    a.addEventListener('keydown',function(e){if(e.key==='ArrowDown'){e.preventDefault();links[(i+1)%links.length].focus()}else if(e.key==='ArrowUp'){e.preventDefault();links[(i-1+links.length)%links.length].focus()}});
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&drawer.classList.contains('open'))close();
+    if(e.key==='Tab'&&drawer.classList.contains('open')){var f=links.concat([btn]);var i=f.indexOf(document.activeElement);if(e.shiftKey&&i===0){e.preventDefault();f[f.length-1].focus()}else if(!e.shiftKey&&i===f.length-1){e.preventDefault();f[0].focus()}}});
+  var ticking=false;
+  function upd(){ticking=false;var d=document.documentElement;var max=d.scrollHeight-window.innerHeight;var p=max>0?Math.min(1,Math.max(0,window.scrollY/max)):0;bar.style.transform='scaleX('+p+')';ring.style.strokeDashoffset=(176*(1-p)).toFixed(1);}
+  window.addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(upd)}},{passive:true});upd();
+  var secs=$$('[data-sec]').filter(function(s){return s.tagName==='SECTION'});
+  function setCur(id){links.forEach(function(a){a.setAttribute('aria-current',a.getAttribute('data-sec')===id?'true':'false')});}
+  if('IntersectionObserver' in window){
+    var vis={};
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){vis[e.target.id]=e.isIntersecting?e.intersectionRatio:0;});var best=null,bv=0;secs.forEach(function(s){if((vis[s.id]||0)>bv){bv=vis[s.id];best=s.id}});if(best)setCur(best);},{rootMargin:'-35% 0px -45% 0px',threshold:[0,.01,.05,.1,.25,.5,.75,1]});
+    secs.forEach(function(s){io.observe(s)});
+  }
+})();
+
+/* ───────── accordions (collapsed by default) ───────── */
+$$('.acc-btn').forEach(function(b){
+  var panel=$('#'+b.getAttribute('aria-controls')),inner=panel.firstElementChild,item=b.closest('.acc-item');
+  inner.inert=true;
+  b.addEventListener('click',function(){var open=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',open);item.classList.toggle('open',open);inner.inert=!open;});
+});
+
+/* ───────── strategy: scroll-linked illustration ───────── */
+(function(){
+  var fig=$('#gapFig'),no=$('#gapNo'),steps=$$('.gap-step');
+  if(!fig||!('IntersectionObserver' in window))return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var n=e.target.getAttribute('data-step');steps.forEach(function(s){s.classList.toggle('active',s===e.target)});fig.setAttribute('data-step',n);no.textContent='0'+n+' / 04';}})},{rootMargin:'-40% 0px -40% 0px'});
+  steps.forEach(function(s){io.observe(s)});
+})();
+
+/* ───────── DATA · journeys ───────── */
+var STAGES=['Awareness','Booking','Transit','Delivery','Post-service'];
+var JOURNEYS={
+  shifter:[
+    {id:'amrita',tab:'Shifter · end-user',title:'Amrita Patel · moving homes',sub:'Shifter, 27, Pune. Wants her things to reach safely without calling ten times for updates.',
+     act:['Sees transigo ad or review online.','Inputs move details, compares prices, selects transporter.','Tracks movement live, gets alerts of pickup and delivery times.','Checks goods condition, gives feedback digitally.','Receives thank-you message and loyalty offer.'],
+     said:['“I want a transparent shifting service.”','“It’s nice to see actual driver profiles and ratings.”','“Finally, I feel in control.”','“Everything’s recorded, I feel secure.”','“That was smoother than expected.”'],
+     emo:['🙄','😊','😊','😎','😮‍💨'],
+     pain:['Fear of hidden costs, scams.','Confusing options in traditional apps.','Anxiety about delays or damage.','Fear of damage to goods.','Limited follow-up in other services.'],
+     opp:['Highlight verified drivers and cost transparency.','Clear comparison layout and transparent quote breakdown.','Real-time push updates and insurance visibility.','Digital verification of goods before and after delivery.','Follow-up satisfaction survey and referral reward.']},
+    {id:'jai',tab:'Business owner',title:'Jai Sharma · regular shipments',sub:'Businessman who needs bulky goods moved regularly and wants fewer coordination calls.',
+     act:['Learns about transigo through peer recommendation or social media.','Creates shipment order, selects verified transporter.','Monitors live tracking, receives automated ETA updates.','Gets proof of delivery and customer signature through the platform.','Rates transporter, views analytics of shipments.'],
+     said:['“Maybe this app can reduce my coordination stress.”','“This feels easy, I can see rates and reviews clearly.”','“Finally, I don’t have to call five times for location.”','“Everything is recorded, no confusion now.”','“I’ll use this again, saves time and chaos.”'],
+     emo:['😬','😄','😮‍💨','🙂','😄'],
+     pain:['Skepticism about reliability.','Fear of hidden charges.','Worry about unexpected delays.','Possible mismatch in delivery confirmation.','Limited loyalty rewards.'],
+     opp:['Build trust with testimonials and transparent transporter profiles.','Upfront pricing, verified driver info and instant digital receipts.','Real-time status and push alerts reduce anxiety.','Digital proof of delivery and automated client intimation.','Performance dashboard and reward points.']}
+  ],
+  partner:[
+    {id:'sanjay',tab:'Transporter · manager',title:'Sanjay Choudhary · transporter',sub:'Manager and coordinator who juggles vehicles, drivers and clients from logs and calls.',
+     act:['Learns about transigo via industry WhatsApp groups.','Uploads available trucks and assigns verified drivers.','Monitors trips via live map and driver logs.','Confirms trip completion, processes digital payments.','Reviews trip reports, improves efficiency.'],
+     said:['“Finally, one system for all coordination.”','“No more phone chaos — I can see status instantly.”','“Transparency helps me manage multiple clients easily.”','“POD and billing done instantly.”','“I can now predict issues early.”'],
+     emo:['😊','😌','🙂','😃','😮‍💨'],
+     pain:['Overreliance on manual records.','Driver unavailability confusion.','Driver detours or theft suspicion.','Manual claim delays.','Lack of predictive insights.'],
+     opp:['Digital dashboard demo to show efficiency.','Driver scheduling automation.','GPS and fuel tracking alerts.','Auto-generated invoices and claim tracking.','Data analytics dashboard for performance overview.']},
+    {id:'amit',tab:'Movers & packers',title:'Amit Sharma · movers & packers owner',sub:'Service provider, 40, Ahmedabad. Juggles client, labour and driver on tight timelines.',
+     act:['Finds transigo through logistics community or online demo.','Creates request, selects transporter and driver combo.','Tracks goods and labour allocation digitally.','Confirms delivery, sends auto-updated invoice.','Analyses delivery data, rates transporters.'],
+     said:['“If this links my driver and client, it’s a game changer.”','“This system keeps everything visible.”','“No need for 10 phone calls per client.”','“Transparency maintained, no blame game.”','“Now I can choose reliable partners next time.”'],
+     emo:['😯','🙂','😮‍💨','😌','🤗'],
+     pain:['Fear of data complexity.','Manual coordination issues.','Lack of live labour updates.','Lost proof of delivery.','No digital rating culture.'],
+     opp:['Simplified onboarding with guided setup.','Integrated scheduler connecting client and driver.','Role-based access for labour updates and driver tracking.','Cloud-stored proof of delivery and automated billing.','Encourage cross-feedback system.']},
+    {id:'mukesh',tab:'Driver',title:'Mukesh Singh · driver',sub:'Drives the route and needs clear pickup details, simple updates and fair, timely pay.',
+     act:['Hears about transigo via transporter or peers.','Accepts trip request via simple interface.','Follows GPS route, updates trip progress with one tap.','Uploads delivery photo or OTP from receiver.','Gets instant payment confirmation and review.'],
+     said:['“If it makes payments fair, I’ll try.”','“No need for long calls, clear pickup details shown.”','“Everything’s automatic, no one can blame me later.”','“Proof uploaded, I’m safe from false claims.”','“Timely pay, clear record — worth using again.”'],
+     emo:['🙂','😃','😌','',''],
+     pain:['Distrust of new tech.','Complex app UIs and data entry.','Network issues, app crashes.','Confusion during multiple deliveries.','Delay in payment cycle.'],
+     opp:['Voice-based onboarding and local language support.','Voice-based trip confirmation and auto-logging.','Offline mode with auto-sync logs.','Multi-stop trip tracker and geofencing.','Payment automation via digital wallets.']}
+  ]
+};
+var BREAK={shifter:'Discovery starts in a search engine. Prices come from calls and change later, status is chased by phone, and proof is a paper receipt or a screenshot.',partner:'Availability, driver details and trip logs live in Excel, WhatsApp and personal contacts. Every job needs manual coordination and leaves little proof behind.'};
+var CHANGE={shifter:'One request built around the route: transparent quotes, verified transporter profiles, live tracking and digital receipts in a single place.',partner:'Loads arrive as routes, drivers and vehicles are listed once, trips are tracked, and documents and payouts are recorded in the app.'};
+var TOUCH={
+  shifter:[
+    ['Searches “Packers &amp; Movers near me”','Searches transporters near me; price comparison and confirmation in one list','Booking &amp; transparency'],
+    ['Calls transporter for quotes and negotiates price','Information is displayed; required documents are added on the app','Communication &amp; coordination'],
+    ['Waits for updates; checks status manually','Route guide, GPS tracking and notifications as the truck moves','Transit'],
+    ['Cash payments, screenshots, paper receipts','Payment recorded on the transigo application','Delivery &amp; feedback'],
+    ['Delays or no feedback system','Feedback and review by all stakeholders','Delivery &amp; feedback']
+  ],
+  partner:[
+    ['Notes enquiries manually or in Excel','Transporter lists, filter options and a database of all uploaded documents','Booking &amp; transparency'],
+    ['Relays updates inconsistently; no live tracking','Security by camera and GPS tracker; route guide and side assistance','Transit'],
+    ['No damage logs: no digital proof','Availability of labour and checking for damages on unloading','Packing &amp; loading'],
+    ['Manual closure; no job record','Policy onboarding, terms and a recorded database for future improvement','Delivery &amp; feedback'],
+    ['Payment cut and delays','Payment recorded on the transigo application','Delivery &amp; feedback']
+  ]
+};
+
+/* ───────── DATA · blueprint ───────── */
+var LAYERS=[['evidence','Physical evidence'],['customer','Customer action'],['onstage','Onstage'],['backstage','Backstage'],['support','Supporting process']];
+var BP=[
+ {id:'comm',name:'Communication & coordination',sub:'Booking to delivery by phone',
+  ph:[['Booking & scheduling','Few hours'],['Matching & confirmation','45–60 min'],['Pre-move coordination','1 day before move'],['In-transit communication','Duration of trip'],['Delivery & feedback','Few minutes']],
+  evidence:['Phone calls, WhatsApp messages','Shared driver and vehicle details','WhatsApp reminders, handwritten notes','Irregular calls or delayed updates','Payment receipts, message confirmation'],
+  customer:['Calls transporter for quotes and negotiates price','Confirms booking via call or WhatsApp','Shares timing, address and goods details','Waits for updates; checks status manually','Receives goods, often earlier or later than expected'],
+  onstage:['Provides estimate and vehicle options','Assigns available driver and confirms details','Coordinates timing and pickup with driver','Relays updates inconsistently; driver does not always call in','Completes delivery but rarely informs customer of exact arrival time'],
+  backstage:['Notes enquiries manually or in Excel','Maintains simple digital log of the trip data','Confirms team availability and loading arrangements','Depends on driver communication; no live tracking','Stores delivery info casually; insurance handled informally'],
+  support:['Personal contact lists, WhatsApp groups','Digital storage (Excel, phone records)','Calls and basic scheduling','WhatsApp and telecom networks','Paper bills, payment log, informal insurance talks'],
+  hi:['Finding transporter','In transit','Feedback']},
+ {id:'pack',name:'Packing & loading',sub:'Handling on site',
+  ph:[['Booking & scheduling','20–30 min'],['Matching & confirmation','45–60 min'],['Pre-move coordination','1–2 hours'],['On-site handling & loading','1–2 hours'],['Post-loading & handover','20–30 min']],
+  evidence:['Calls, diary entries and WhatsApp chat','Paper ID and phone screenshots','Verbal confirmation and paper notes','Packing materials and local labour','Verbal updates, confirmation and digital payment screenshot'],
+  customer:['Calls local transporters and local agents','Discusses rates, negotiates and confirms','Shares pickup time and items via call','Observes the loading process and signs the required documentation','Confirms goods departure'],
+  onstage:['Transporter answers calls, provides quote','Sends driver contact, shares partial details','Tries aligning with driver and labour','Labourers load goods and driver oversees loosely','Shares updates through calls; driver confirms verbally'],
+  backstage:['Manual record and improper digital log entries','Limited driver verification; sometimes fake IDs','No tracking; depends only on calls','No damage logs: no digital proof','Manual closure; no job record'],
+  support:['Local agent network, personal contacts','Phone-based coordination','Verbal communication, WhatsApp reminders','Unverified labour sourcing','Basic cash or bank-connected payments'],
+  hi:['Packaging','Loading','Unloading']},
+ {id:'book',name:'Booking & transparency',sub:'From search to receipt',
+  ph:[['Awareness & interest','10–20 min'],['Enquiry','15–30 min'],['Price estimation & comparison','1–2 days'],['Confirmation & booking','30–60 min'],['Payment & receipt','10–15 min']],
+  evidence:['Google results, online ads, aggregator websites','Enquiry forms, WhatsApp numbers, local websites','Quotation calls, emails, handwritten estimates','Phone confirmation, paper slips','Cash payments, screenshots, paper receipts'],
+  customer:['Searches “Packers & Movers near me”','Calls or fills form to request quote','Receives different price quotes from 2–3 companies','Chooses one mover based on trust or cost','Pays advance or full payment'],
+  onstage:['Basic information is displayed','Assigned staff calls the client to collect data','Representative visits home to check goods','Team confirms by phone or WhatsApp','Sends text or paper receipt'],
+  backstage:['SEO pushes listings','Staff manually write down pickup and delivery information','Manual cost calculation based on guesswork','Transporter notes booking in a logbook','Payment recorded manually or through WhatsApp'],
+  support:['Google ads, Justdial, word of mouth','Excel sheets','Phone calls, WhatsApp chats','Manual scheduling','Digital payment options'],
+  hi:['Finding transporter','Payment']},
+ {id:'transit',name:'Transit',sub:'Departure to arrival',
+  ph:[['Departure','30–45 min'],['In transit','Few days'],['Government checkpoint','15 min–1 hour'],['Arrival','30–60 min']],
+  evidence:['Weighbridge slip, booking confirmation','GPS tracking, enquiry forms, WhatsApp chats, toll and fuel receipts','Challan, RTO and toll receipts, driver documents','Delivery note, paper slips, phone confirmation, consignee signature'],
+  customer:['Weighing of truck','En route towards destination','Checking at toll and RTO','Finding drop-off location'],
+  onstage:['Calculation if truck is overloaded or not','Confusion in finding route; theft, accidents and calling the transporter continuously','Challan for overloading, bribery, incomplete documents','Calling transporter again and again; phone switched off for delays'],
+  backstage:['Informing transporter and input to database','Finding assistance, lack of security, getting calls from all for delays','Checkpoint irregularities and improper practices go unrecorded','Consignor waiting for the goods to come'],
+  support:['Google ads, Justdial, word of mouth','Excel sheets, GPS tracking, phone logs','Phone calls, WhatsApp chats, RTO databases','Manual scheduling, consignment tracking software'],
+  hi:['In transit','Government checkpoint']},
+ {id:'deliv',name:'Delivery & feedback',sub:'Unloading to review',
+  ph:[['Unloading','Few hours'],['Checking goods','1–2 hours'],['Payment','Instant–days'],['Insurance','Instant–days'],['Feedback','—']],
+  evidence:['Unloading slips, vehicle arrival notes','Enquiry forms, WhatsApp messages, inspection sheets, manager’s checklist','Quotation calls, handwritten estimates, receipts, bank confirmation messages','Phone confirmation, policy documents, claim forms, paper slips','Cash payment slips, screenshots, customer feedback forms, receipts'],
+  customer:['Unloading of goods','Manager checking goods','Payment for transporting goods to transporter','Asking for insurance for damaged goods','Asking for feedback by transporter / packers & movers'],
+  onstage:['Labour unloading goods to warehouse','Unpack and counting of goods','Checking receipts and bills','Insurance by transporter and disputes','Delays or no feedback system'],
+  backstage:['Finding labour to unload','Checking through lists and bills given','Payment cut and delays','Claims analysis of insurance and items','Putting ratings through families and friends to boost business'],
+  support:['Availability of workforce','Excel sheets','Payment gateway','Insurance processing','Review database'],
+  hi:['Unloading','Payment','Feedback']}
+];
+var AFTER={
+  ph:[['Finding transporter / P&M','10–20 min'],['Packaging','Few hours'],['Loading','Same day'],['In transit','Few days'],['Government checkpoint','5–10 min'],['Unloading','Few hours'],['Payment','Few min–days'],['Feedback','5–8 min']],
+  evidence:['transigo app / website, documents, camera','Unified barcode, RFID, packaging materials','Weighing machine, labour documents, goods','RFID, GPS tracker, transigo application, phone calls, Google Maps','Documents, challan, FASTag','Notifications, labour, phone calls, documents','Cash / card payments, paper receipts, insurance (outsourced)','AI help, transigo application, phone call'],
+  customer:['Searches P&M and transporters near me; price comparison and confirmation','Goods packaged with RFID-enabled stickers','Loading of goods in truck according to its weight','Truck on its way towards the decided location','Showing documents to RTO and paying toll','Unloading of goods by the labourers','Pays after checking through cash or card','Feedback and review by all stakeholders, with transigo help if needed'],
+  onstage:['Information is displayed; required documents provided and added on the app','Tracking of goods and number of items','Weight of the goods measured; required documents given','Finding route, communication and coordination between all, plus security','If overloaded, checking transigo policy and paying RTO accordingly by the liable person','Availability of labour and checking for damages','Pays the total amount after checking and gets all the bills','Calls by transigo to ask if any help is needed and for review input'],
+  backstage:['Transporter lists, filter options and a database of all uploaded documents','RFID tracked in the transigo app / website','Notification about arrival by transigo beforehand and final price estimate','Security by camera and GPS tracker for theft or damage; route guide; side assistance by distance','Drafting of policies','Notification about truck arrivals and checking of the goods','Payment recorded on the transigo application; insurance by outsource','Feedback from customer corresponds to the merchant’s profile'],
+  support:['transigo app and listing database with filters','RFID tags and Google Maps for tracking','Measuring time of truck; weight documents for record of data','Algorithmic database','Policy onboarding, terms and conditions','Measuring time and database of truck through algorithm','Digital payment options','Database system for future improvements']
+};
+
+/* ───────── service section ───────── */
+(function(){
+  if(!$('#cjm'))return;
+  var role='shifter',state='before',who=0,area=0,layers={evidence:false,customer:true,onstage:true,backstage:false,support:false};
+  var grid=$('#cjmGrid'),cjm=$('#cjm');
+  function renderWho(){
+    var box=$('#svcWho');box.innerHTML='';
+    JOURNEYS[role].forEach(function(j,i){var b=h('button',{type:'button','aria-pressed':i===who,text:j.tab});b.addEventListener('click',function(){who=i;renderWho();renderCjm(true)});box.appendChild(b)});
+  }
+  function cell(cls,txt,role_){var c=h('div',{class:cls,role:role_||'cell'});c.textContent=txt;return c;}
+  function renderCjm(anim){
+    var j=JOURNEYS[role][who];
+    $('#cjmTitle').textContent=j.title;$('#cjmSub').textContent=j.sub;cjm.setAttribute('data-state',state);
+    grid.innerHTML='';
+    grid.appendChild(cell('rowh','Stages','columnheader'));
+    STAGES.forEach(function(s,i){var c=h('div',{class:'st',role:'columnheader'});c.appendChild(h('i',{text:String(i+1)}));c.appendChild(document.createTextNode(s));grid.appendChild(c)});
+    function row(label,arr,cls,hcls,fn){grid.appendChild(cell('rowh '+(hcls||''),label,'rowheader'));arr.forEach(function(t,i){var c=h('div',{class:cls+(anim?' swap':''),role:'cell'});if(fn)fn(c,t,i);else c.textContent=t;grid.appendChild(c)})}
+    row('User actions',j.act,'');
+    row('Thoughts & feelings',j.said,'feel','',function(c,t,i){c.appendChild(document.createTextNode(t));if(j.emo[i])c.appendChild(h('em',{text:j.emo[i],'aria-hidden':'true'}));});
+    row('Pain points',j.pain,'pain','pain-h');
+    row('Opportunities',j.opp,'opp','opp-h');
+  }
+  function renderAreas(){
+    var box=$('#bpAreas');box.innerHTML='';
+    BP.forEach(function(a,i){var b=h('button',{type:'button',role:'tab','aria-selected':i===area,tabindex:i===area?0:-1});b.innerHTML=a.name.replace('&','&amp;')+'<small>'+a.sub+'</small>';
+      b.addEventListener('click',function(){area=i;renderAreas();renderBp()});
+      b.addEventListener('keydown',function(e){var n=null;if(e.key==='ArrowRight')n=(i+1)%BP.length;else if(e.key==='ArrowLeft')n=(i-1+BP.length)%BP.length;if(n!==null){e.preventDefault();area=n;renderAreas();renderBp();$$('#bpAreas button')[n].focus()}});
+      box.appendChild(b)});
+  }
+  function renderLayers(){
+    var box=$('#bpLayers');$$('button',box).forEach(function(b){b.remove()});
+    LAYERS.forEach(function(l){var b=h('button',{type:'button','aria-pressed':!!layers[l[0]],text:l[1]});b.addEventListener('click',function(){layers[l[0]]=!layers[l[0]];renderLayers();renderBp(true)});box.appendChild(b)});
+  }
+  function renderBp(keep){
+    var data=state==='before'?BP[area]:AFTER,ph=data.ph,box=$('#bpPhases');
+    var hi=BP[area].hi;
+    box.style.setProperty('--cols',ph.length);box.className='bp-phases '+(state==='after'?'after':'');box.innerHTML='';
+    ph.forEach(function(p,i){
+      var col=h('div',{class:'ph-col'});
+      if(state==='after'){var on=hi.some(function(x){return p[0].toLowerCase().indexOf(x.toLowerCase())===0});col.style.opacity=on?1:.55;}
+      var head=h('div',{class:'ph-head'});head.textContent=p[0];head.appendChild(h('small',{text:p[1]}));col.appendChild(head);
+      LAYERS.forEach(function(l,li){
+        if(!layers[l[0]])return;
+        if(l[0]==='backstage'&&layers.onstage)col.appendChild(h('div',{class:'line-label',text:'Visibility line'}));
+        if(l[0]==='support'&&layers.backstage)col.appendChild(h('div',{class:'line-label',text:'Internal interaction line'}));
+        var key={evidence:'physical',customer:'customer',onstage:'onstage',backstage:'backstage',support:'support'}[l[0]];
+        var c=h('div',{class:'lay'+(keep?'':' ')});c.setAttribute('data-l',key);c.appendChild(h('b',{text:l[1]}));c.appendChild(document.createTextNode(data[l[0]][i]||'—'));col.appendChild(c);
+      });
+      box.appendChild(col);
+    });
+    $('#bpBreak').textContent=BREAK[role];$('#bpChange').textContent=CHANGE[role];
+    var t=$('#touch');t.innerHTML='';
+    TOUCH[role].forEach(function(r){var row=h('div',{class:'touch-row'});row.innerHTML='<span class="was">'+r[0]+'</span><span class="arr" aria-hidden="true">→</span><span>'+r[1]+'</span><span class="chip pending" style="white-space:normal">'+r[2]+'</span>';t.appendChild(row)});
+  }
+  var rs=seg($('#roleSeg'),function(b){role=b.getAttribute('data-role');who=0;renderWho();renderCjm(true);renderBp(true)});
+  var ss=seg($('#stateSeg'),function(b){state=b.getAttribute('data-state');renderCjm(true);renderBp(true)});
+  renderWho();renderCjm(false);renderAreas();renderLayers();renderBp();
+})();
+
+/* ───────── DATA · screens ───────── */
+var SC={
+ '00':{f:'00-splash',n:'Splash · Route Signal',k:'Entry',t:'Opens on a route, not a form.',w:'A real truck photograph, a Pune → Bengaluru line and one action. It sets the idea — movement, made clearer — before anything is asked.',dk:0},
+ '01':{f:'01-workspace',n:'Choose a workspace',k:'Entry',t:'One decision sets the whole experience.',w:'Role is chosen once. The shipper workspace is light and the transport partner workspace is dark, so people always know which side they are on. “You can switch later” removes the fear of choosing wrong.',dk:0},
+ '02':{f:'02-shipper-home',n:'Shipper home',k:'Shipper',t:'What is moving right now.',w:'Status comes first: counts, the live route and recent shipments. “New shipment” is the single primary action, so starting a request is never hidden.',dk:0},
+ '03':{f:'03-route',n:'New shipment · Route',k:'Shipper',t:'Start with the route.',w:'The route is the first question because vehicle matching and transit time are built on it. A route preview confirms the choice, and “No commitment yet” lowers the stakes.',dk:0},
+ '04':{f:'04-cargo',n:'New shipment · Cargo',k:'Shipper',t:'Now, the cargo.',w:'Cargo type tiles, weight, dimensions and pickup window. The helper text says why they matter — weight and size decide which vehicles can take it.',dk:0},
+ '05':{f:'05-review',n:'New shipment · Review',k:'Shipper',t:'Check before you compare.',w:'A deliberate pause. Every earlier answer can be edited in place, and the screen states plainly that nothing is booked yet.',dk:0},
+ '06':{f:'06-options',n:'Transport options',k:'Shipper',t:'Compare by what matters.',w:'Three options, each labelled by what it is best for — recommended, lowest price, fastest — with price, timing and features. Labels carry meaning as well as colour.',dk:0},
+ '07':{f:'07-booking',n:'Booking confirmed',k:'Shipper',t:'Your route is in motion.',w:'Confirmation shows the shipment reference and what happens next, so there is nothing to chase.',dk:0},
+ '08':{f:'08-tracking-a',n:'Live tracking',k:'Shipper',t:'One view of the route.',w:'Route, vehicle marker, ETA and milestones together, replacing the “calling five times for location” moment from the research.',dk:0},
+ '09':{f:'09-tracking-b',n:'Live tracking · updated',k:'Shipper',t:'A change is explained, not just shown.',w:'When the route refreshes, a line says what changed. Only the marker, ETA and status move, following the “one at a time” motion principle.',dk:0},
+ '10':{f:'10-documents',n:'Shipment documents',k:'Shipper',t:'Proof lives with the shipment.',w:'Document readiness, plus verified, review and pending statuses in one list — every status has a label as well as a dot.',dk:0},
+ '11':{f:'11-upload',n:'Add a document',k:'Shipper',t:'A sheet, not a new page.',w:'The upload sheet keeps context behind a scrim. Cancel and Add document are both visible, and the field says who can see the file.',dk:0},
+ '11b':{f:'11b-doc-added',n:'Document added',k:'Shipper',t:'Feedback where the action happened.',w:'A plain confirmation appears in place and the list updates. No celebration animation — the system confirms and gets out of the way.',dk:0},
+ '12':{f:'12-provider-home',n:'Provider home',k:'Transport partner',t:'Start from the fleet, not a search.',w:'Availability, active trips and “loads matching your fleet” lead the screen. This is where the route match becomes visible to the transport partner.',dk:1},
+ '13':{f:'13-loads',n:'Available loads',k:'Transport partner',t:'Find your next route.',w:'Loads are filtered by fit — recommended, near me, FTL, fastest — and each card says how many vehicles fit.',dk:1},
+ '14':{f:'14-load-details',n:'Load details',k:'Transport partner',t:'Everything needed to decide.',w:'Route, offer, cargo and requirements, and payment terms up front. Orange is reserved for the decisive action: Accept load.',dk:1},
+ '15':{f:'15-accept',n:'Confirm this commitment',k:'Transport partner',t:'A commitment gets a confirmation.',w:'The sheet restates load, route, pickup window, vehicle fit and amount, and says what happens if the fit changes. Go back is as visible as Confirm.',dk:1},
+ '16':{f:'16-active-trip',n:'Active trip',k:'Transport partner',t:'The same route, from the driving side.',w:'On route, arrival time, delivery milestones, and Navigate and Contact shipper within reach.',dk:1},
+ '17':{f:'17-fleet',n:'My fleet',k:'Transport partner',t:'Availability drives matching.',w:'Vehicles at a glance and a registered list with clear status. A reminder that expiry alerts keep the fleet eligible for loads.',dk:1},
+ '18':{f:'18-earnings',n:'Earnings and payouts',k:'Transport partner',t:'Money, stated plainly.',w:'Total earnings, one chart type with a highlighted value, and recent payouts. The chart is labelled as prototype data, not settled payments.',dk:1}
+};
+var FLOW={shipper:['00','01','02','03','04','05','06','07','08','09','10','11','11b'],partner:['00','01','12','13','14','15','16','17','18']};
+function tabs(kind,skip){
+  var s=[['02',0,'Home'],['03',98,'Shipments'],['08',195,'Track'],['10',293,'More']],p=[['12',0,'Home'],['13',98,'Loads'],['17',195,'Fleet'],['18',293,'Earnings']];
+  return (kind==='s'?s:p).filter(function(t){return t[0]!==skip}).map(function(t){return [t[1],771,98,72,t[0],t[2]+' tab']});
+}
+var HS={
+ '00':[[20,714,350,52,'01','Get started']],
+ '01':[[20,268,350,190,'02','Shipper workspace'],[20,476,350,190,'12','Transport partner workspace']],
+ '02':[[285,194,85,14,'08','View all shipments'],[20,303,350,187,'08','Featured live route'],[20,537,350,72,'08','Shipment TRG-245689'],[20,621,350,72,'08','Shipment TRG-245688'],[20,713,350,52,'03','New shipment']].concat(tabs('s','02')),
+ '03':[[20,34,22,22,'02','Back'],[20,714,350,52,'04','Continue to cargo']].concat(tabs('s','03')),
+ '04':[[20,34,22,22,'03','Back'],[304,209,53,14,'03','Edit route'],[20,714,350,52,'05','Review shipment']].concat(tabs('s','03')),
+ '05':[[20,34,22,22,'04','Back'],[333,203,22,14,'03','Edit route'],[333,333,22,14,'04','Edit cargo'],[333,477,22,14,'04','Edit pickup'],[20,714,350,52,'06','Compare transport options']].concat(tabs('s','03')),
+ '06':[[20,34,22,22,'05','Back'],[20,645,350,52,'07','Continue with FTL']].concat(tabs('s','03')),
+ '07':[[20,649,350,52,'08','Track shipment']].concat(tabs('s','x')),
+ '08':[[20,34,22,22,'02','Back'],[332,116,38,38,'09','Refresh route'],[20,645,150,14,'10','Documents'],[20,683,350,52,'09','Preview next route update']].concat(tabs('s','08')),
+ '09':[[20,34,22,22,'02','Back'],[332,116,38,38,'08','Refresh route'],[20,682,150,14,'10','Documents'],[20,710,350,52,'08','Back to live route']].concat(tabs('s','08')),
+ '10':[[20,34,22,22,'02','Back'],[285,37,84,15,'11','Upload a document']].concat(tabs('s','10')),
+ '11':[[0,0,390,844,'10','Close'],[340,392,30,30,'10','Close upload sheet'],[20,776,151,47,'10','Cancel'],[184,776,186,47,'11b','Add document']],
+ '11b':[[20,34,22,22,'02','Back'],[285,37,84,15,'11','Upload a document']].concat(tabs('s','10')),
+ '12':[[20,224,111,76,'16','Active trips'],[290,324,80,14,'13','See all loads'],[20,350,350,99,'14','Load: Pune to Ahmedabad'],[20,462,350,99,'14','Load: Delhi to Jaipur']].concat(tabs('p','12')),
+ '13':[[20,34,22,22,'12','Back'],[20,243,350,143,'14','Pune to Ahmedabad'],[20,400,350,143,'14','Delhi to Jaipur'],[20,557,350,143,'14','Mumbai to Indore']].concat(tabs('p','13')),
+ '14':[[20,34,22,22,'12','Back'],[20,695,350,52,'15','Accept load']].concat(tabs('p','13')),
+ '15':[[0,0,390,844,'14','Close'],[21,770,118,50,'14','Go back'],[151,770,218,48,'16','Confirm and accept']],
+ '16':[[20,34,22,22,'12','Back']].concat(tabs('p','13')),
+ '17':[[20,34,22,22,'12','Back']].concat(tabs('p','17')),
+ '18':[[20,34,22,22,'12','Back']].concat(tabs('p','18'))
+};
+var TR={'00':'fade','01':'slide','02':'slide','11':'up','15':'fade'};
+function img(id,lazy){var s=SC[id];return h('img',{src:'assets/screens/'+s.f+'.png',width:'390',height:'844',alt:'transigo screen: '+s.n,loading:lazy?'lazy':'eager',decoding:'async'});}
+
+/* ───────── prototype ───────── */
+(function(){
+  var shell=$('#proto');if(!shell)return;
+  var scr=$('#devScreen'),steps=$('#protoSteps'),bar=$('#devBar'),note=$('#protoNote'),status=$('#protoStatus'),playBtn=$('#pPlay'),ico=$('#pPlayIco'),showHs=$('#showHs');
+  var role='shipper',cur='00',enabled=!RM.matches,idleUntil=0,elapsed=0,dwell=3600,last=0,raf=0,inView=false,hinted=false,imgs={};
+  var PL='<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>',PP='<path d="M7 5l12 7-12 7z"/>';
+  Object.keys(SC).forEach(function(id){var im=img(id,true);im.setAttribute('data-id',id);scr.appendChild(im);imgs[id]=im;});
+  var hsLayer=h('div',{});hsLayer.style.cssText='position:absolute;inset:0;z-index:3';scr.appendChild(hsLayer);
+  function flow(){return FLOW[role]}
+  function roleOf(id){if(FLOW.shipper.indexOf(id)>-1&&FLOW.partner.indexOf(id)>-1)return role;return FLOW.shipper.indexOf(id)>-1?'shipper':'partner'}
+  function renderSteps(){
+    steps.innerHTML='';bar.innerHTML='';
+    flow().forEach(function(id,i){
+      var b=h('button',{type:'button'});b.appendChild(h('i',{text:(i<9?'0':'')+(i+1)}));b.appendChild(document.createTextNode(SC[id].n));b.addEventListener('click',function(){userGo(id,'fade')});
+      var li=h('li');li.appendChild(b);steps.appendChild(li);bar.appendChild(h('i',{},[h('b')]));
+    });
+  }
+  function setRole(r,silent){role=r;shell.setAttribute('data-role',r);roleSeg.select(r);
+    $('#protoTitle').textContent=r==='shipper'?'Shipper · light workspace':'Transport partner · dark workspace';
+    $('#protoLede').textContent=r==='shipper'?'Create a route, describe cargo, compare transport and follow it live.':'Start from your fleet, find a load on your route, accept it and run the trip.';
+    renderSteps();}
+  var roleSeg=seg($('#protoRole'),function(b){setRole(b.getAttribute('data-role'));go('01'==cur||'00'==cur?cur:flow()[2],'fade');});
+  function go(id,tr){
+    var nr=roleOf(id);if(nr!==role){setRole(nr);}
+    cur=id;elapsed=0;hinted=false;
+    scr.setAttribute('data-tr',RM.matches?'fade':(tr||'fade'));
+    Object.keys(imgs).forEach(function(k){imgs[k].classList.toggle('cur',k===id)});
+    var f=flow(),idx=f.indexOf(id);
+    $$('#protoSteps button').forEach(function(b,i){b.setAttribute('aria-current',i===idx)});
+    $$('#devBar i').forEach(function(b,i){b.classList.toggle('done',i<idx);$('b',b).style.transform=i<idx?'scaleX(1)':'scaleX(0)'});
+    var s=SC[id];note.innerHTML='';note.appendChild(h('span',{class:'k',text:s.k+' · '+(idx>-1?(idx+1)+' of '+f.length:'')}));note.appendChild(h('h4',{text:s.n}));note.appendChild(h('p',{text:s.t+' '+s.w}));
+    renderHs();
+  }
+  function renderHs(){
+    hsLayer.innerHTML='';
+    (HS[cur]||[]).forEach(function(a){
+      var b=h('button',{type:'button',class:'hs','aria-label':a[5]+' — go to '+SC[a[4]].n});
+      b.style.cssText='left:'+(a[0]/390*100)+'%;top:'+(a[1]/844*100)+'%;width:'+(a[2]/390*100)+'%;height:'+(a[3]/844*100)+'%';
+      b.setAttribute('data-to',a[4]);
+      b.addEventListener('click',function(){userGo(a[4],TR[a[4]]||(a[4]==='11'?'up':'slide'))});
+      hsLayer.appendChild(b);
+    });
+  }
+  function userGo(id,tr){idleUntil=performance.now()+9000;pauseNote();go(id,tr||'fade');}
+  function pauseNote(){if(enabled)status.textContent='Paused while you explore — resumes shortly';status.classList.add('paused');}
+  function next(dir){var f=flow(),i=f.indexOf(cur);if(i<0)i=0;var n=f[(i+dir+f.length)%f.length];go(n,dir>0?(TR[n]||'slide'):'fade');}
+  $('#pNext').addEventListener('click',function(){idleUntil=performance.now()+9000;pauseNote();next(1)});
+  $('#pPrev').addEventListener('click',function(){idleUntil=performance.now()+9000;pauseNote();next(-1)});
+  function setEnabled(v){enabled=v;playBtn.setAttribute('aria-pressed',v);playBtn.setAttribute('aria-label',v?'Pause autoplay':'Play autoplay');ico.innerHTML=v?PL:PP;status.textContent=v?'Autoplay on':(RM.matches?'Autoplay off (reduced motion)':'Autoplay paused');status.classList.toggle('paused',!v);idleUntil=0;if(v)start();}
+  playBtn.addEventListener('click',function(){setEnabled(!enabled)});
+  showHs.addEventListener('change',function(){scr.classList.toggle('show-hs',showHs.checked)});
+  shell.addEventListener('keydown',function(e){var t=e.target;if(t&&(t.tagName==='INPUT'&&t.type!=='checkbox'))return;
+    if(e.key==='ArrowRight'){e.preventDefault();$('#pNext').click()}else if(e.key==='ArrowLeft'){e.preventDefault();$('#pPrev').click()}
+    else if(e.key===' '&&t&&t.tagName!=='BUTTON'&&t.tagName!=='INPUT'){e.preventDefault();playBtn.click()}});
+  shell.addEventListener('pointerdown',function(e){if(e.target.closest('#devScreen')){idleUntil=performance.now()+9000;if(enabled)pauseNote();}});
+  function tick(t){
+    raf=0;if(!enabled||!inView||document.hidden)return;
+    var dt=last?Math.min(100,t-last):0;last=t;
+    if(t<idleUntil){raf=requestAnimationFrame(tick);return}
+    if(idleUntil&&t>=idleUntil){idleUntil=0;status.textContent='Autoplay on';status.classList.remove('paused');}
+    elapsed+=dt;
+    var f=flow(),idx=f.indexOf(cur),b=$$('#devBar i b')[idx];if(b)b.style.transform='scaleX('+Math.min(1,elapsed/dwell)+')';
+    if(!hinted&&elapsed>dwell*.62){hinted=true;var nx=f[(idx+1)%f.length];var hs=$$('.hs',hsLayer).filter(function(x){return x.getAttribute('data-to')===nx})[0];if(hs){hs.classList.add('hint')}}
+    if(elapsed>=dwell){var n=f[(idx+1)%f.length];go(n,TR[n]||'slide');}
+    raf=requestAnimationFrame(tick);
+  }
+  function start(){if(!raf){last=0;raf=requestAnimationFrame(tick)}}
+  if('IntersectionObserver' in window){new IntersectionObserver(function(es){inView=es[0].isIntersecting;if(inView&&enabled)start();}).observe(shell);}else{inView=true}
+  document.addEventListener('visibilitychange',function(){if(!document.hidden&&enabled)start()});
+  setRole('shipper');go('00');setEnabled(enabled);
+  window.__proto={go:function(id){userGo(id)},cur:function(){return cur},role:function(){return role}};
+})();
+
+/* ───────── final screens + lightbox ───────── */
+(function(){
+  var box=$('#scGroups');if(!box)return;
+  var role='shipper',shown=[];
+  var G={
+    shipper:[['Entry','Open the app and pick a side.',['00','01']],['Request &amp; book','Route, cargo, review, compare, confirm.',['02','03','04','05','06','07']],['Track &amp; prove','Live route, updates and shipment documents.',['08','09','10','11','11b']]],
+    partner:[['Entry','Open the app and pick a side.',['00','01']],['Find &amp; accept loads','Start from the fleet, find a fit, commit.',['12','13','14','15']],['Run &amp; settle','Active trip, fleet readiness, earnings.',['16','17','18']]]
+  };
+  function render(){
+    box.innerHTML='';shown=[];
+    G[role].forEach(function(g,gi){
+      var sec=h('div',{class:'sc-grp'});sec.appendChild(h('h3',{html:'<small>0'+(gi+1)+'</small>'+g[0]}));sec.appendChild(h('p',{html:g[1]}));
+      var row=h('div',{class:'sc-row'});
+      g[2].forEach(function(id){
+        shown.push(id);var s=SC[id];
+        var c=h('button',{type:'button',class:'sc-card'+(s.dk?' dk':''),'aria-label':'Open larger view: '+s.n});
+        var im=h('div',{class:'im'});im.appendChild(img(id,true));im.appendChild(h('span',{class:'zoom',html:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg>'}));c.appendChild(im);
+        var cap=h('div',{class:'cap'});cap.appendChild(h('i',{text:(id.length<3?id:id.toUpperCase())}));cap.appendChild(h('b',{text:s.n}));cap.appendChild(h('span',{text:s.t}));c.appendChild(cap);
+        c.addEventListener('click',function(){openLb(id,c)});row.appendChild(c);
+      });
+      sec.appendChild(row);box.appendChild(sec);
+    });
+  }
+  var rs=seg($('#scRole'),function(b){role=b.getAttribute('data-role');render()});
+  render();
+  var lb=$('#lb'),opener=null,curId=null;
+  function show(id){
+    curId=id;var s=SC[id],i=shown.indexOf(id);
+    var im=$('#lbImg');im.src='assets/screens/'+s.f+'.png';im.alt='transigo screen: '+s.n;
+    $('#lbK').textContent=s.k;$('#lbT').textContent=s.n;$('#lbP').textContent=s.t;$('#lbW').innerHTML='<strong>Why it works.</strong> '+s.w;
+    $('#lbC').textContent=(i+1)+' / '+shown.length;$('#lbPrev').disabled=i<=0;$('#lbNext').disabled=i>=shown.length-1;
+    $('#lbPrev').style.opacity=i<=0?.35:1;$('#lbNext').style.opacity=i>=shown.length-1?.35:1;
+  }
+  function openLb(id,from){opener=from||document.activeElement;if(shown.indexOf(id)<0){shown=[id]}show(id);lb.classList.add('open');lb.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';$('#lbX').focus();}
+  function closeLb(){lb.classList.remove('open');lb.setAttribute('aria-hidden','true');document.body.style.overflow='';if(opener&&opener.focus)opener.focus();}
+  function step(d){var i=shown.indexOf(curId)+d;if(i>=0&&i<shown.length)show(shown[i]);}
+  $('#lbX').addEventListener('click',closeLb);$('#lbPrev').addEventListener('click',function(){step(-1)});$('#lbNext').addEventListener('click',function(){step(1)});
+  lb.addEventListener('click',function(e){if(e.target===lb)closeLb()});
+  document.addEventListener('keydown',function(e){if(!lb.classList.contains('open'))return;
+    if(e.key==='Escape')closeLb();else if(e.key==='ArrowRight')step(1);else if(e.key==='ArrowLeft')step(-1);
+    else if(e.key==='Tab'){var f=[$('#lbX'),$('#lbPrev'),$('#lbNext')].filter(function(x){return !x.disabled});var i=f.indexOf(document.activeElement);if(e.shiftKey&&i<=0){e.preventDefault();f[f.length-1].focus()}else if(!e.shiftKey&&(i===f.length-1||i<0)){e.preventDefault();f[0].focus()}}});
+  window.__openScreen=function(id,from){var role_=FLOW.shipper.indexOf(id)>-1&&id!=='00'&&id!=='01'?'shipper':(FLOW.partner.indexOf(id)>-1&&id!=='00'&&id!=='01'?'partner':role);if(role_!==role){role=role_;rs.select(role);render()}openLb(id,from)};
+})();
+
+/* ───────── connected service ───────── */
+(function(){
+  var nodes=$('#ecoNodes');if(!nodes)return;
+  var path=$('.eco-route',nodes.parentNode),L=path.getTotalLength(),cur=0;
+  var E=[
+   {n:'Choose a workspace',s:['01','02'],p:['01','12'],st:'Pick a side once',sd:'The shipper lands on a light home with the live route and a primary “New shipment” action.',pd:'The transport partner lands on a dark home: availability, active trips and loads matching the fleet.',m:['One entry, two workspaces','Light for shipper, dark for provider','Role can be switched later']},
+   {n:'Describe the move · set availability',s:['03','04'],p:['12'],st:'Two inputs, one route',sd:'The shipper starts with pickup and delivery, then cargo type, weight, size and a pickup window.',pd:'The partner marks themselves available for loads and keeps their fleet current.',m:['Route, cargo, weight and pickup window become the load a partner can see','Availability and vehicles are what the load is matched against']},
+   {n:'Match',s:['05','06'],p:['13','14'],st:'Same route, same vehicle, two views',sd:'After a review pause, the shipper compares transport options by price, speed and fit.',pd:'The partner sees loads that fit their fleet — “2 vehicles fit” — and opens full load details.',m:['Route and vehicle type appear on both screens','Prices and timings shown are prototype data','Nothing is committed on either side yet']},
+   {n:'Commit',s:['07'],p:['15'],st:'A decision with a confirmation',sd:'Booking is confirmed with a shipment reference and a plain list of what happens next.',pd:'Accepting a load opens a confirmation that restates the route, window, vehicle fit and amount.',m:['Booking reference TRG-245689 ties both sides to one record','Orange marks the decisive action: Accept load','“Accept only if the vehicle and pickup window match”']},
+   {n:'Live route',s:['08','09'],p:['16'],st:'One route, followed from both ends',sd:'The shipper sees route, vehicle marker, ETA and milestones, and can preview a route update.',pd:'The partner sees the same route as an active trip, with Navigate and Contact shipper within reach.',m:['Route, vehicle position, ETA and milestones','When a route changes, text says what changed','Only the changed element moves']},
+   {n:'Documents · fleet readiness',s:['10','11'],p:['17'],st:'Evidence on both sides',sd:'Shipment documents show readiness and statuses; a sheet adds more without leaving the page.',pd:'The fleet screen shows which vehicles are available, on a trip or need attention.',m:['Verified, review and pending states with labels','Vehicle availability feeds what can be matched','Expiry alerts keep the fleet eligible']},
+   {n:'Close & record',s:['11b'],p:['18'],st:'The record stays with the shipment',sd:'A document is added and the list updates in place, with a plain confirmation.',pd:'Earnings and recent payouts show what the work has produced, labelled as prototype data.',m:['Shipment files stay with the shipment record','Payouts reference the same shipment IDs','Provider feedback and dispute flows are not yet designed']}
+  ];
+  E.forEach(function(e,i){
+    var pt=path.getPointAtLength(L*(0.04+0.92*i/6));
+    var g=sv('g',{class:'st-node',tabindex:'0',role:'button','aria-label':'Step '+(i+1)+': '+e.n});
+    g.appendChild(sv('circle',{class:'c',cx:pt.x,cy:pt.y,r:24}));
+    var t=sv('text',{class:'n',x:pt.x,y:pt.y});t.textContent=i+1;g.appendChild(t);
+    var lbl=sv('text',{class:'t',x:pt.x,y:pt.y+(i%2?-40:46)});lbl.textContent=e.n.split(' · ')[0];g.appendChild(lbl);
+    g.addEventListener('click',function(){sel(i)});
+    g.addEventListener('keydown',function(ev){if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();sel(i)}else if(ev.key==='ArrowRight'){ev.preventDefault();focusNode(i+1)}else if(ev.key==='ArrowLeft'){ev.preventDefault();focusNode(i-1)}});
+    nodes.appendChild(g);
+  });
+  function focusNode(i){var gs=$$('.st-node',nodes);if(gs[i]){gs[i].focus();sel(i,true)}}
+  function shots(ids){var w=h('div',{class:'shots'});ids.forEach(function(id){var b=h('button',{type:'button','aria-label':'Open larger view: '+SC[id].n});b.appendChild(img(id,true));b.addEventListener('click',function(){window.__openScreen(id,b)});w.appendChild(b)});return w;}
+  function sel(i){
+    cur=i;var e=E[i];
+    $$('.st-node',nodes).forEach(function(g,k){g.setAttribute('aria-current',k===i)});
+    var d=$('#ecoDetail');d.innerHTML='';
+    var head=h('div',{class:'eco-head'});head.innerHTML='<span>Step '+(i+1)+' of 7</span><strong>'+e.n.replace('&','&amp;')+'</strong><span class="eco-nav"></span>';
+    var nav=$('.eco-nav',head);var pb=h('button',{type:'button','aria-label':'Previous step',text:'←'}),nb=h('button',{type:'button','aria-label':'Next step',text:'→'});
+    pb.disabled=i===0;nb.disabled=i===6;pb.addEventListener('click',function(){sel(i-1)});nb.addEventListener('click',function(){sel(i+1)});nav.appendChild(pb);nav.appendChild(nb);d.appendChild(head);
+    var a=h('div',{class:'eco-card s'});a.appendChild(h('span',{class:'who',text:'Shipper'}));a.appendChild(h('h4',{text:e.st}));a.appendChild(h('p',{text:e.sd}));a.appendChild(shots(e.s));
+    var m=h('div',{class:'eco-card m'});m.appendChild(h('span',{class:'who',text:'What passes between'}));var ul=h('ul');e.m.forEach(function(x){ul.appendChild(h('li',{text:x}))});m.appendChild(ul);
+    var p=h('div',{class:'eco-card p'});p.appendChild(h('span',{class:'who',text:'Transport partner'}));p.appendChild(h('h4',{text:e.st}));p.appendChild(h('p',{text:e.pd}));p.appendChild(shots(e.p));
+    d.appendChild(a);d.appendChild(m);d.appendChild(p);
+  }
+  sel(0);
+})();
+
+/* ───────── design manual ───────── */
+(function(){
+  var tabs=$$('#mTabs [role=tab]');if(!tabs.length)return;
+  function show(b,focus){tabs.forEach(function(x){var on=x===b;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1;var p=$('#'+x.getAttribute('aria-controls'));p.hidden=!on;});if(focus)b.focus();}
+  tabs.forEach(function(b,i){b.addEventListener('click',function(){show(b)});b.addEventListener('keydown',function(e){var n=null;if(e.key==='ArrowRight')n=tabs[(i+1)%tabs.length];else if(e.key==='ArrowLeft')n=tabs[(i-1+tabs.length)%tabs.length];else if(e.key==='Home')n=tabs[0];else if(e.key==='End')n=tabs[tabs.length-1];if(n){e.preventDefault();show(n,true)}})});
+
+  // clear space
+  var cr=$('#clrRange');cr.addEventListener('input',function(){$('#clrDemo').style.setProperty('--x',cr.value+'px');$('#clrOut').textContent=cr.value+' px'});
+
+  // swatches
+  var SW=[
+   ['Brand and light surfaces',[['Persian Indigo','#3A0CA3','White text 11.9:1 · AAA','Signature brand, primary actions, selected nav','#fff'],['Deep Navy','#0B1D3A','White text 16.8:1 · AAA','High-emphasis text, dark brand surface','#fff'],['Electric Violet','#8B5CF6','White text 4.2:1 · large text only','Route highlights, selected states, never body text','#fff',1],['Sunrise Orange','#FF7A00','Charcoal text 6.7:1 · AA','Decisive actions only (Accept, Confirm)','#171922'],['Off White','#F7F5F0','Charcoal text 16.1:1 · AAA','Shipper app background','#171922',0,1],['White','#FFFFFF','Charcoal text 17.5:1 · AAA','Cards, forms, content surfaces','#171922',0,1],['Charcoal','#171922','White text 17.5:1 · AAA','Primary text on light','#fff'],['Secondary text','#697286','White text 4.8:1 · AA','Supporting text on light','#fff'],['Border','#E2E4EB','Charcoal text 13.8:1 · AAA','Dividers and control outlines','#171922']]],
+   ['Provider dark surfaces',[['Dark Base','#0D1425','White text 18.4:1 · AAA','Provider app background','#fff'],['Dark Surface','#131D32','White text 16.8:1 · AAA','Cards, forms, panels','#fff'],['Dark Elevated','#1B2841','White text 14.7:1 · AAA','Selected emphasis, nested content','#fff'],['Dark Border','#2A3854','White text 11.7:1 · AAA','Borders on dark','#fff'],['Dark Secondary Text','#929CB7','Charcoal text 6.4:1 · AA','Secondary text on dark','#171922']]],
+   ['Functional status',[['In Transit / Sky','#56C7FF','Charcoal text 9.2:1 · AAA','Active transport and progress','#171922'],['Delivered / Mint','#00C896','Charcoal text 8.1:1 · AAA','Completion, positive states','#171922'],['Attention / Lemon','#E9FF5B','Charcoal text 15.8:1 · AAA','Needs action (use on dark; tint on light)','#171922'],['Delay / Coral','#FF4D6D','Charcoal text 5.5:1 · AA','Delay, failure, error only','#171922']]]
+  ];
+  var sw=$('#swatches');
+  SW.forEach(function(g){
+    sw.appendChild(h('div',{class:'sw-group',text:g[0]}));var grid=h('div',{class:'swatches'});
+    g[1].forEach(function(s){
+      var b=h('button',{type:'button',class:'sw','aria-label':'Copy '+s[0]+' '+s[1]});
+      var c=h('div',{class:'c'});c.style.background=s[1];c.style.color=s[4];if(s[6])c.style.boxShadow='inset 0 0 0 1px #E2E4EB';c.textContent=s[1];
+      var i=h('div',{class:'i'});i.appendChild(h('b',{text:s[0]}));i.appendChild(h('code',{text:s[1]}));var em=h('em',{text:s[2]});if(s[5])em.style.color='#b3173a';i.appendChild(em);i.appendChild(h('span',{text:s[3]}));
+      b.appendChild(c);b.appendChild(i);
+      b.addEventListener('click',function(){var ok=function(){c.textContent='Copied';setTimeout(function(){c.textContent=s[1]},1200)};safe(function(){navigator.clipboard.writeText(s[1]).then(ok,ok)})||ok();});
+      grid.appendChild(b);
+    });sw.appendChild(grid);
+  });
+
+  // button states
+  var bd=$('#btnDemo');
+  $$('#btnStates button').forEach(function(b){b.addEventListener('click',function(){$$('#btnStates button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});var s=b.getAttribute('data-s');$$('.btn',bd).forEach(function(x){x.classList.remove('is-hover','is-focus');x.disabled=false;if(s==='hover')x.classList.add('is-hover');if(s==='focus')x.classList.add('is-focus');if(s==='disabled')x.disabled=true;})})});
+
+  // route maps
+  var PATH='M70 230 C 190 250, 230 80, 360 140 S 520 60, 580 80';
+  function map(root,dark,label){
+    var c=dark?{bg:'#101a30',blk:'#16213a',tr:'#8B5CF6',rem:'#929CB7',dest:'#fff',destIn:'#3A0CA3',pill:'#fff',pillT:'#0B1D3A'}:{bg:'#E9EAF5',blk:'#DDE0EF',tr:'#3A0CA3',rem:'#697286',dest:'#3A0CA3',destIn:'#fff',pill:'#fff',pillT:'#0B1D3A'};
+    var s=sv('svg',{viewBox:'0 0 640 300',role:'img','aria-label':label});
+    s.appendChild(sv('rect',{width:640,height:300,fill:c.bg}));
+    [[20,20,120,70],[160,30,90,60],[270,10,140,50],[440,24,150,70],[24,120,100,60],[150,214,120,70],[430,170,170,100],[300,230,100,50]].forEach(function(r){s.appendChild(sv('rect',{x:r[0],y:r[1],width:r[2],height:r[3],rx:10,fill:c.blk}))});
+    s.appendChild(sv('path',{d:PATH,fill:'none',stroke:c.rem,'stroke-width':4,'stroke-dasharray':'1 11','stroke-linecap':'round','data-k':'remaining'}));
+    var tr=sv('path',{d:PATH,fill:'none',stroke:c.tr,'stroke-width':6,'stroke-linecap':'round','data-k':'travelled'});s.appendChild(tr);
+    function pin(x,y,fill,inn,k){var g=sv('g',{transform:'translate('+x+' '+y+')','data-k':k});g.appendChild(sv('path',{d:'M0 0c-10-13-14-19-14-26a14 14 0 1 1 28 0c0 7-4 13-14 26z',fill:fill}));g.appendChild(sv('circle',{cy:-26,r:5,fill:inn}));s.appendChild(g);}
+    pin(70,230,'#FF7A00','#fff','pickup');pin(580,80,c.dest,c.destIn,'destination');
+    function pill(x,y,w,t){var g=sv('g',{'data-k':'city'});g.appendChild(sv('rect',{x:x,y:y,width:w,height:22,rx:11,fill:c.pill}));var tx=sv('text',{x:x+w/2,y:y+15,'text-anchor':'middle','font-size':11,'font-weight':800,fill:c.pillT,'font-family':'Plus Jakarta Sans,sans-serif'});tx.textContent=t;g.appendChild(tx);s.appendChild(g);}
+    pill(36,244,70,'Pune');pill(536,92,88,'Ahmedabad');
+    var veh=sv('g',{'data-k':'vehicle'});var ring=sv('circle',{r:18,fill:'none',stroke:dark?'#8B5CF6':'#3A0CA3','stroke-width':3,class:'pulse'});ring.style.transformBox='fill-box';ring.style.transformOrigin='center';veh.appendChild(ring);veh.appendChild(sv('circle',{r:11,fill:dark?'#8B5CF6':'#3A0CA3',stroke:'#fff','stroke-width':3}));s.appendChild(veh);
+    root.appendChild(s);
+    var L=tr.getTotalLength();
+    return function(p){var l=L*p/100;tr.setAttribute('stroke-dasharray',l+' '+L);var pt=tr.getPointAtLength(l);veh.setAttribute('transform','translate('+pt.x+' '+pt.y+')');};
+  }
+  var ml=map($('#mapLight'),false,'Light route map: Pune to Ahmedabad, travelled route solid and remaining route dotted');
+  var md=map($('#mapDark'),true,'Dark route map: Pune to Ahmedabad');
+  var rr=$('#routeRange');function setP(){ml(+rr.value);md(+rr.value);$('#routeOut').textContent=rr.value+'%'}rr.addEventListener('input',setP);setP();
+  var LG=[['pickup','Pickup','Orange pin','#FF7A00'],['destination','Destination','Indigo pin (white on dark)','#3A0CA3'],['travelled','Travelled','Solid line','#3A0CA3'],['remaining','Remaining','Dotted line','#697286'],['vehicle','Vehicle','Marker + Route Pulse ring','#8B5CF6'],['city','City labels','White pill, 11 px bold','#fff']];
+  var lg=$('#legend'),act=null;
+  LG.forEach(function(l){
+    var li=h('li'),b=h('button',{type:'button','aria-pressed':'false'});var i=h('i');i.innerHTML='<svg width="22" height="22" viewBox="0 0 22 22"><rect x="3" y="3" width="16" height="16" rx="5" fill="'+l[3]+'" stroke="#E2E4EB"/></svg>';b.appendChild(i);var sp=h('span');sp.innerHTML='<b>'+l[1]+'</b><br><span class="muted" style="font-size:12.5px">'+l[2]+'</span>';b.appendChild(sp);
+    b.addEventListener('click',function(){act=act===l[0]?null:l[0];$$('#legend button').forEach(function(x){x.setAttribute('aria-pressed','false')});if(act)b.setAttribute('aria-pressed','true');
+      $$('.mapbox [data-k]').forEach(function(e){e.style.opacity=(!act||e.getAttribute('data-k')===act)?1:.18});});
+    li.appendChild(b);lg.appendChild(li);
+  });
+
+  // motion
+  var moRl=$('#moRl'),moVeh=$('#moVeh'),toast=$('#moToast'),one=$$('#moOne span');
+  function dur(){return RM.matches?'0ms':null}
+  $$('[data-mo]').forEach(function(b){b.addEventListener('click',function(){var k=b.getAttribute('data-mo');
+    if(k==='reveal'){moRl.style.transition='none';moRl.classList.remove('on');void moRl.offsetWidth;moRl.style.transition=RM.matches?'none':'';moRl.classList.add('on');setTimeout(function(){moRl.classList.remove('on')},1800)}
+    if(k==='move'){var w=moVeh.parentNode.clientWidth-40;moVeh.style.transition=RM.matches?'none':'';moVeh.style.left=w+'px';setTimeout(function(){moVeh.style.left='12px'},1500)}
+    if(k==='confirm'){toast.style.transitionDuration=RM.matches?'0ms':'200ms';toast.classList.add('on');setTimeout(function(){toast.classList.remove('on')},1800)}
+    if(k==='one'){var i=Math.floor(Math.random()*one.length);one.forEach(function(s,j){s.classList.toggle('on',j===i)});setTimeout(function(){one.forEach(function(s){s.classList.remove('on')})},1500)}
+  })});
+  function rm(){$('#rmState').textContent=RM.matches?'Reduced motion is on: changes cut instantly':'Reduced motion is off: motion is allowed'}rm();
+  if(RM.addEventListener)RM.addEventListener('change',rm);
+})();
+
+/* ───────── hero: pause when offscreen ───────── */
+(function(){
+  var hero=$('#top');if(!hero||!('IntersectionObserver' in window))return;
+  new IntersectionObserver(function(es){hero.style.setProperty('--play',es[0].isIntersecting?'running':'paused');$$('.hero *').forEach(function(e){});hero.classList.toggle('off',!es[0].isIntersecting)}).observe(hero);
+})();
+})();
+
+</script>
+</body>
+</html>
+
+</body></html>
